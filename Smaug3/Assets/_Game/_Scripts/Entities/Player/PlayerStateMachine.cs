@@ -8,13 +8,14 @@ public class PlayerStateMachine : MonoBehaviour
     // Referência global da state machine do Player
     public static PlayerStateMachine StateManager;
 
-    [SerializeField, ReadOnly] private PlayerStates currentState = PlayerStates.Playing;
+    [SerializeField] private PlayerStates defaultState;
+    [SerializeField, ReadOnly] private PlayerStates currentState;
 
     // Possibilidades de States
     public enum PlayerStates
     {
-        NotPlaying,
-        Playing,
+        Dead,
+        Idle,
         Moving,
         Damaged
     };
@@ -22,6 +23,7 @@ public class PlayerStateMachine : MonoBehaviour
     private void Awake()
     {
         StateManager = this;
+        SetState(defaultState);
     }
 
     public PlayerStates GetState() 

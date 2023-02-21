@@ -217,8 +217,9 @@ GameObject:
   m_Component:
   - component: {fileID: 989524259}
   - component: {fileID: 989524260}
+  - component: {fileID: 989524261}
   m_Layer: 0
-  m_Name: Test StateMachine
+  m_Name: Player (Teste)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -251,4 +252,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f686ca5125827046a0619881b72d0ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  defaultState: 1
   currentState: 1
+--- !u!114 &989524261
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 989524258}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d440b164fe6794e4195ea4523d40028f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 100
+  currentHealth: 0
+  isInvincible: 0
+  invencibilityTime: 0
