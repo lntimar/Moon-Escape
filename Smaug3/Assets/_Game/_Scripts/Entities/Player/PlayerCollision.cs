@@ -28,7 +28,7 @@ public class PlayerCollision : MonoBehaviour
     private void Start()
     {
         _blinkVFX = GetComponent<BlinkSpriteVFX>();
-        _blinkVFX.SetBlink();
+        //_blinkVFX.SetBlink();
     }
 
     private void OnCollisionEnter2D(Collision2D col)
