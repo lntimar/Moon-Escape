@@ -19,11 +19,6 @@ public class PlayerCollision : MonoBehaviour
         SetHealth(maxHealth);
     }
 
-    private void Update()
-    {
-        SetHealth(GetHealth() - 1);
-    }
-
     private void OnCollisionEnter2D(Collision2D col)
     {
         if (isInvincible) return; // Ignore caso estiver invencível
