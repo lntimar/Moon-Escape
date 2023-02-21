@@ -26,11 +26,6 @@ public class PlayerCollision : MonoBehaviour
         // TODO: Verificação de Colisão entre inimigos, projetéis, armadilhas, etc...
     }
 
-    private void ApplyDamage(int damage)
-    {
-        currentHealth -= damage;
-    }
-
     private void SetHealth(int points)
     {
         currentHealth = Mathf.Clamp(points, 0, maxHealth);
