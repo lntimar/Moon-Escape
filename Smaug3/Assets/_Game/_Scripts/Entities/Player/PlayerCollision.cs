@@ -11,18 +11,28 @@ public class PlayerCollision : MonoBehaviour
     [SerializeField, ReadOnly] private int currentHealth;
 
     [Header("Invencibility:")]
-    [SerializeField, ReadOnly] private bool isInvincible = false;
     [SerializeField] private float invencibilityTime;
+
+    // References
+    private BlinkSpriteVFX _blinkVFX;
+
+    // Collision Layers
+    private int _playerColLayer = 3;
+    private int _enemyColLayer = 6;
 
     private void Awake()
     { 
         SetHealth(maxHealth);
     }
 
+    private void Start()
+    {
+        _blinkVFX = GetComponent<BlinkSpriteVFX>();
+        _blinkVFX.SetBlink();
+    }
+
     private void OnCollisionEnter2D(Collision2D col)
     {
-        if (isInvincible) return; // Ignore caso estiver invencível
-        
         // TODO: Verificação de Colisão entre inimigos, projetéis, armadilhas, etc...
     }
 
@@ -44,8 +54,8 @@ public class PlayerCollision : MonoBehaviour
 
     private IEnumerator SetInvencibilityInterval(float time)
     {
-        isInvincible = true;
+        Physics2D.IgnoreLayerCollision(_playerColLayer, _enemyColLayer, true);
         yield return new WaitForSeconds(time);
-        isInvincible = false;
+        Physics2D.IgnoreLayerCollision(_playerColLayer, _enemyColLayer, false);
     }
 }
