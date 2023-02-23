@@ -220,6 +220,7 @@ GameObject:
   - component: {fileID: 989524260}
   - component: {fileID: 989524261}
   - component: {fileID: 989524263}
+  - component: {fileID: 989524264}
   m_Layer: 3
   m_Name: Player
   m_TagString: Untagged
@@ -337,3 +338,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   time: 10
   interval: 0.1
+--- !u!114 &989524264
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 989524258}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7242efc1ddf55a44f99872abdc483fac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shootInterval: 0
+  canShoot: 1
+  bananas: []
