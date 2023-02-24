@@ -10,13 +10,19 @@ public class PlayerShoot : MonoBehaviour
     [SerializeField, ReadOnly] private bool canShoot = true;
 
     [Header("Types:")] 
-    [SerializeField] private string defaultType;
-    [SerializeField, ReadOnly] private string currentType;
+    [SerializeField] private BananaType.Types defaultType;
+    [SerializeField, ReadOnly] private BananaType.Types currentType;
     [SerializeField] private float defaultEnergy;
     [SerializeField] private float currentEnergy;
-    [SerializeField] private Banana[] bananas;
+    [SerializeField] private BananaType[] bananas;
 
     private Vector2 _direction;
+
+    private void Start()
+    {
+        currentType = defaultType;
+        currentEnergy = defaultEnergy;
+    }
 
     private void Update()
     {
@@ -40,12 +46,15 @@ public class PlayerShoot : MonoBehaviour
 
     private void SpawnBanana()
     {
-        /*
-        foreach (Banana b in bananas)
+        foreach (BananaType b in bananas)
         {
-
+            if (b.GetType() == currentType)
+            {
+                var banana = Instantiate(b, transform.position, Quaternion.identity);
+                banana.GetComponent<BananaMovement>().SetDirection(_direction);
+                break;
+            }
         }
-        */
     }
 
     private IEnumerator SetShootInterval(float time)

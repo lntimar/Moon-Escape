@@ -4,15 +4,10 @@ using UnityEngine;
 
 public class Banana : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    // DataBase 
+    [HideInInspector] public string Name { get { return Name; } private set { Name = value; } }
+    [HideInInspector] public string Damage { get { return Damage; } private set { Damage = value; } }
+    [HideInInspector] public float Speed { get { return Speed; } private set { Speed = value; } }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+   // TODO: Integração entre o SQL e C#
 }
