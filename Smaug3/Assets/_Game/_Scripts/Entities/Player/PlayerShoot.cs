@@ -10,33 +10,45 @@ public class PlayerShoot : MonoBehaviour
     [SerializeField, ReadOnly] private bool canShoot = true;
 
     [Header("Types:")] 
-    [SerializeField] private BananaType.Types defaultType;
+    [SerializeField] private BananaType defaultBanana;
     [SerializeField, ReadOnly] private BananaType.Types currentType;
-    [SerializeField] private float defaultEnergy;
-    [SerializeField] private float currentEnergy;
-    [SerializeField] private BananaType[] bananas;
+    [SerializeField] private int maxEnergy; // Provavelmente vai ser static
+    [SerializeField] private int currentEnergy; // Provavelmente vai ser static
+    [SerializeField] private List<BananaType> bananas; // Lista dos tipos de bananas que possuo no momento
 
+    // Direção do Disparo
     private Vector2 _direction;
 
     private void Start()
     {
-        currentType = defaultType;
-        currentEnergy = defaultEnergy;
+        // Colocando os Valores Iniciais
+        currentType = defaultBanana.GetType();
+        ChangeCurrentEnergy(maxEnergy);
     }
 
     private void Update()
     {
+        if (PlayerStateMachine.StateManager.IsFine() == false) return;
+        
         ShootInput();
+        ChangeInput();
     }
 
+    // Disparo
     private void ShootInput()
     {
-        if (canShoot && Input.GetButton("Shoot"))
+        if (canShoot && Input.GetButton("Shoot") && currentEnergy - GetCurrentBananaType().GetEnergyCost() >= 0)
         {
             canShoot = false;
-            SpawnBanana();
+            SpawnBanana(GetCurrentBananaType().GetComponent<BananaMovement>());
+            ChangeCurrentEnergy(GetCurrentBananaType().GetEnergyCost());
             SetShootInterval(shootInterval);
         }
+    }
+    private IEnumerator SetShootInterval(float time)
+    {
+        yield return new WaitForSeconds(time);
+        canShoot = true;
     }
 
     public void SetDirection(Vector2 dir)
@@ -44,22 +56,51 @@ public class PlayerShoot : MonoBehaviour
         _direction = dir;
     }
 
-    private void SpawnBanana()
+    // Banana
+    private void SpawnBanana(BananaMovement b)
     {
+        var banana = Instantiate(b, transform.position, Quaternion.identity);
+        banana.SetDirection(_direction);
+    }
+
+    private BananaType GetCurrentBananaType()
+    {
+        var type = bananas[0];
+
         foreach (BananaType b in bananas)
         {
             if (b.GetType() == currentType)
             {
-                var banana = Instantiate(b, transform.position, Quaternion.identity);
-                banana.GetComponent<BananaMovement>().SetDirection(_direction);
+                type = b;
                 break;
             }
         }
+
+        return type;
     }
 
-    private IEnumerator SetShootInterval(float time)
+    // Energia
+    public void ChangeMaxEnergy(int increment)
     {
-        yield return new WaitForSeconds(time);
-        canShoot = true;
+        maxEnergy += increment;
+    }
+
+    public void ChangeCurrentEnergy(int increment)
+    {
+        currentEnergy = Mathf.Clamp(currentEnergy + increment, 0, maxEnergy);
+    }
+
+    // Troca de tipo
+    private void ChangeInput()
+    {
+        if (Input.GetButtonDown("Change Bullet"))
+        {
+            
+        }
+    }
+
+    public void AddBananaType(BananaType b)
+    {
+        bananas.Add(b);
     }
 }

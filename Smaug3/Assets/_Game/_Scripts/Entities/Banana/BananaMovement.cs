@@ -4,11 +4,12 @@ using UnityEngine;
 
 public class BananaMovement : MonoBehaviour
 {
-    private Vector2 _direction;
-
     // Components
     private Banana _banana;
     private Rigidbody2D _rb;
+
+    // Direção do Movimento 
+    private Vector2 _direction;
 
     private void Start()
     {

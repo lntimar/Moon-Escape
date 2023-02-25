@@ -5,23 +5,26 @@ using UnityEngine;
 public class BananaType : MonoBehaviour
 {
     private Types _type;
+    private int _energyCost;
 
     private void Awake()
     {
         SetType(GetComponent<Banana>().Name);
+        SetEnergyCost(GetComponent<Banana>().EnergyCost);
     }
 
     public enum Types
     {
-        // Examples
+        // Todos os Tipos de bananas
         Normal,
         Fire,
         Ice,
         Poison
     }
 
-    public void SetType(string name)
+    private void SetType(string name)
     {
+        // Defino o tipo com base no nome
         switch (name)
         {
             case "Fire":
@@ -45,6 +48,16 @@ public class BananaType : MonoBehaviour
     public Types GetType()
     {
         return _type;
+    }
+
+    private void SetEnergyCost(int cost)
+    {
+        _energyCost = cost;
+    }
+
+    public int GetEnergyCost()
+    {
+        return _energyCost;
     }
 
     // TODO: Efeitos Bananas

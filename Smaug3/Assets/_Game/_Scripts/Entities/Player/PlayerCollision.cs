@@ -7,8 +7,8 @@ using UnityEngine.SceneManagement;
 public class PlayerCollision : MonoBehaviour
 {
     [Header("Health:")]
-    [SerializeField] private int maxHealth;
-    [SerializeField, ReadOnly] private int currentHealth;
+    [SerializeField] private int maxHealth; // Provavelmente vai ser static
+    [SerializeField, ReadOnly] private int currentHealth; // Provavelmente vai ser static
 
     [Header("Invencibility:")]
     [SerializeField] private float invencibilityTime;
@@ -22,13 +22,12 @@ public class PlayerCollision : MonoBehaviour
 
     private void Awake()
     { 
-        SetHealth(maxHealth);
+        ChangeCurrentHealth(maxHealth);
     }
 
     private void Start()
     {
         _blinkVFX = GetComponent<BlinkSpriteVFX>();
-        //_blinkVFX.SetBlink();
     }
 
     private void OnCollisionEnter2D(Collision2D col)
@@ -36,9 +35,9 @@ public class PlayerCollision : MonoBehaviour
         // TODO: Verificação de Colisão entre inimigos, projetéis, armadilhas, etc...
     }
 
-    private void SetHealth(int points)
+    private void ChangeCurrentHealth(int points)
     {
-        currentHealth = Mathf.Clamp(points, 0, maxHealth);
+        currentHealth = Mathf.Clamp(currentHealth + points, 0, maxHealth);
 
         if (currentHealth == 0)
         {
@@ -54,8 +53,10 @@ public class PlayerCollision : MonoBehaviour
 
     private IEnumerator SetInvencibilityInterval(float time)
     {
+        // Desabilito a colisão entre o player e os inimigos
         Physics2D.IgnoreLayerCollision(_playerColLayer, _enemyColLayer, true);
         yield return new WaitForSeconds(time);
+        // Habilito novamente a colisão entre o player e os inimigos
         Physics2D.IgnoreLayerCollision(_playerColLayer, _enemyColLayer, false);
     }
 }

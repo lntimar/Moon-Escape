@@ -40,4 +40,12 @@ public class PlayerStateMachine : MonoBehaviour
     {
         return StateManager.currentState == state;
     }
+
+    public bool IsFine()
+    {
+        // Verifico se o player está morto ou tomou dano
+        var isDeadorDamaged = PlayerStateMachine.StateManager.CompareState(PlayerStateMachine.PlayerStates.Dead) || PlayerStateMachine.StateManager.CompareState(PlayerStateMachine.PlayerStates.Damaged);
+        // Retorno true ou false com base na verificação anterior
+        return isDeadorDamaged;
+    }
 }
