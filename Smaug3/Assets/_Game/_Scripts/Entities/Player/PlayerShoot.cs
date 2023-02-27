@@ -28,7 +28,7 @@ public class PlayerShoot : MonoBehaviour
 
     private void Update()
     {
-        if (PlayerStateMachine.StateManager.IsFine() == false) return;
+        if (PlayerStateMachine.StateManager.IsNotFine() == true) return;
         
         ShootInput();
         ChangeInput();
@@ -44,7 +44,14 @@ public class PlayerShoot : MonoBehaviour
             ChangeCurrentEnergy(bananas[currentBananaIndex].GetEnergyCost());
             SetShootInterval(shootInterval);
         }
+
+        if (Input.GetButtonUp("Shoot"))
+        {
+            StopAllCoroutines(); // Pare todas as coroutines SetShootInterval
+            canShoot = true;
+        }
     }
+
     private IEnumerator SetShootInterval(float time)
     {
         yield return new WaitForSeconds(time);
