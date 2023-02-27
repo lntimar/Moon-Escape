@@ -10,11 +10,11 @@ public class PlayerShoot : MonoBehaviour
     [SerializeField, ReadOnly] private bool canShoot = true;
 
     [Header("Types:")] 
-    [SerializeField] private BananaType defaultBanana;
-    [SerializeField, ReadOnly] private BananaType.Types currentType;
+    [SerializeField] private int defaultBananaIndex;
+    [SerializeField] private int currentBananaIndex;
     [SerializeField] private int maxEnergy; // Provavelmente vai ser static
     [SerializeField] private int currentEnergy; // Provavelmente vai ser static
-    [SerializeField] private List<BananaType> bananas; // Lista dos tipos de bananas que possuo no momento
+    [SerializeField] private BananaType[] bananas = new BananaType[4]; // Lista dos tipos de bananas que possuo no momento
 
     // Direção do Disparo
     private Vector2 _direction;
@@ -22,7 +22,7 @@ public class PlayerShoot : MonoBehaviour
     private void Start()
     {
         // Colocando os Valores Iniciais
-        currentType = defaultBanana.GetType();
+        currentBananaIndex = defaultBananaIndex;
         ChangeCurrentEnergy(maxEnergy);
     }
 
@@ -37,11 +37,11 @@ public class PlayerShoot : MonoBehaviour
     // Disparo
     private void ShootInput()
     {
-        if (canShoot && Input.GetButton("Shoot") && currentEnergy - GetCurrentBananaType().GetEnergyCost() >= 0)
+        if (canShoot && Input.GetButton("Shoot") && currentEnergy - bananas[currentBananaIndex].GetEnergyCost() >= 0)
         {
             canShoot = false;
-            SpawnBanana(GetCurrentBananaType().GetComponent<BananaMovement>());
-            ChangeCurrentEnergy(GetCurrentBananaType().GetEnergyCost());
+            SpawnBanana(bananas[currentBananaIndex].GetComponent<BananaMovement>());
+            ChangeCurrentEnergy(bananas[currentBananaIndex].GetEnergyCost());
             SetShootInterval(shootInterval);
         }
     }
@@ -63,22 +63,6 @@ public class PlayerShoot : MonoBehaviour
         banana.SetDirection(_direction);
     }
 
-    private BananaType GetCurrentBananaType()
-    {
-        var type = bananas[0];
-
-        foreach (BananaType b in bananas)
-        {
-            if (b.GetType() == currentType)
-            {
-                type = b;
-                break;
-            }
-        }
-
-        return type;
-    }
-
     // Energia
     public void ChangeMaxEnergy(int increment)
     {
@@ -93,14 +77,32 @@ public class PlayerShoot : MonoBehaviour
     // Troca de tipo
     private void ChangeInput()
     {
-        if (Input.GetButtonDown("Change Bullet"))
+        if (Input.GetButtonDown("Change Banana")) // Troca para a seguinte
         {
-            
+            if (currentBananaIndex + 1 >= bananas.Length)
+            {
+                currentBananaIndex = defaultBananaIndex;
+            }
+            else if (bananas[currentBananaIndex + 1] != null)
+            {
+                currentBananaIndex++;
+            }
+        }
+        else if (Input.GetButtonDown("Change Default Banana")) // Troca para a default
+        {
+            currentBananaIndex = defaultBananaIndex;
         }
     }
 
     public void AddBananaType(BananaType b)
     {
-        bananas.Add(b);
+        for (int i = 0; i < bananas.Length; i++)
+        {
+            if (bananas[i] == null)
+            {
+                bananas[i] = b;
+                break;
+            }
+        }
     }
 }
