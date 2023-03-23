@@ -8,18 +8,25 @@ public class PlayerCollision : MonoBehaviour
 {
     [Header("Health:")]
     [SerializeField] private int maxHealth; // Provavelmente vai ser static
-    [SerializeField, ReadOnly] private int currentHealth; // Provavelmente vai ser static
+    [SerializeField] private int currentHealth; // Provavelmente vai ser static
+    [SerializeField] private SpriteRenderer playerDeathSpr;
+    [SerializeField] private Animator playerDeathAnim;
 
     [Header("Invencibility:")]
     [SerializeField] private float invencibilityTime;
 
-    // References
+    [Header("Collision Layers:")]
+    [SerializeField] CollisionLayers collisionLayers;
+
+    [Header("Knockback:")] 
+    [SerializeField] private float knockbackForce;
+
+    // Components
     private BlinkSpriteVFX _blinkVFX;
+    private SpriteRenderer _spr;
+    private Rigidbody2D _rb;
 
-    // Collision Layers
-    private int _playerColLayer = 3;
-    private int _enemyColLayer = 6;
-
+    
     private void Awake()
     { 
         ChangeCurrentHealth(maxHealth);
@@ -28,6 +35,7 @@ public class PlayerCollision : MonoBehaviour
     private void Start()
     {
         _blinkVFX = GetComponent<BlinkSpriteVFX>();
+        _spr = GetComponent<SpriteRenderer>();
     }
 
     private void OnCollisionEnter2D(Collision2D col)
@@ -42,11 +50,17 @@ public class PlayerCollision : MonoBehaviour
         if (currentHealth == 0)
         {
             PlayerStateMachine.StateManager.SetState(PlayerStateMachine.PlayerStates.Dead);
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name); // TODO: Remover dps
+            _spr.enabled = false;
+            playerDeathSpr.enabled = true;
+
+            if (_spr.flipX) playerDeathAnim.SetTrigger("deadLeft");
+            else playerDeathAnim.SetTrigger("deadRight");
+
+            //SceneManager.LoadScene(SceneManager.GetActiveScene().name); // TODO: Remover dps
         }
     }
 
-    public int GetHealth()
+    public int GetCurrentHealth()
     {
         return currentHealth;
     } 
@@ -54,9 +68,14 @@ public class PlayerCollision : MonoBehaviour
     private IEnumerator SetInvencibilityInterval(float time)
     {
         // Desabilito a colisão entre o player e os inimigos
-        Physics2D.IgnoreLayerCollision(_playerColLayer, _enemyColLayer, true);
+        Physics2D.IgnoreLayerCollision(collisionLayers.PlayerLayer, collisionLayers.EnemyLayer, true);
         yield return new WaitForSeconds(time);
         // Habilito novamente a colisão entre o player e os inimigos
-        Physics2D.IgnoreLayerCollision(_playerColLayer, _enemyColLayer, false);
+        Physics2D.IgnoreLayerCollision(collisionLayers.PlayerLayer, collisionLayers.EnemyLayer, false);
+    }
+
+    public void ApplyKnockback(Vector2 dir)
+    {
+        _rb.AddForce(dir * knockbackForce * Time.deltaTime, ForceMode2D.Impulse);
     }
 }

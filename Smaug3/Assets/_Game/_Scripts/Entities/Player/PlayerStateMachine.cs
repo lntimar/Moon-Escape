@@ -9,7 +9,7 @@ public class PlayerStateMachine : MonoBehaviour
     public static PlayerStateMachine StateManager;
 
     [SerializeField] private PlayerStates defaultState;
-    [SerializeField, ReadOnly] private PlayerStates currentState;
+    [SerializeField] private PlayerStates currentState;
 
     // Possibilidades de States
     public enum PlayerStates
@@ -23,7 +23,7 @@ public class PlayerStateMachine : MonoBehaviour
     private void Awake()
     {
         StateManager = this;
-        SetState(defaultState);
+        StateManager.SetState(defaultState);
     }
 
     public PlayerStates GetState() 

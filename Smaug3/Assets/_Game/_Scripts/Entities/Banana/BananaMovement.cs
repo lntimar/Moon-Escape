@@ -27,6 +27,11 @@ public class BananaMovement : MonoBehaviour
         _direction = dir;
     }
 
+    public Vector2 GetDirection()
+    {
+        return _direction;
+    }
+
     private void ApplyMovement()
     {
         _rb.velocity = _direction * _banana.Speed;

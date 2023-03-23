@@ -14,14 +14,14 @@ TagManager:
   - UI
   - Enemy
   - Banana
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - Ground
+  - Attack
+  - Effect
+  - IgnoreExplosion
+  - IgnoreIce
+  - IgnoreEletric
+  - Wall
+  - Boss
   - 
   - 
   - 
@@ -41,4 +41,7 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Game
+    uniqueID: 1701221225
     locked: 0

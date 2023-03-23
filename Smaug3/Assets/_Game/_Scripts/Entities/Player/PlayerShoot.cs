@@ -16,11 +16,19 @@ public class PlayerShoot : MonoBehaviour
     [SerializeField] private int currentEnergy; // Provavelmente vai ser static
     [SerializeField] private BananaType[] bananas = new BananaType[4]; // Lista dos tipos de bananas que possuo no momento
 
-    // Dire��o do Disparo
+    // Components
+    private Animator _anim;
+    private SpriteRenderer _spr;
+
+    // Direção do Disparo
     private Vector2 _direction;
+    private string _shootAnim;
 
     private void Start()
     {
+        _anim = GetComponent<Animator>();
+        _spr = GetComponent<SpriteRenderer>();
+
         // Colocando os Valores Iniciais
         currentBananaIndex = defaultBananaIndex;
         ChangeCurrentEnergy(maxEnergy);
@@ -28,8 +36,9 @@ public class PlayerShoot : MonoBehaviour
 
     private void Update()
     {
-        if (PlayerStateMachine.StateManager.IsNotFine() == true) return;
-        
+        // Ignore a detecção de input, caso estiver morto ou tomado dano
+        if (PlayerStateMachine.StateManager.IsNotFine()) return; 
+
         ShootInput();
         ChangeInput();
     }
@@ -42,13 +51,15 @@ public class PlayerShoot : MonoBehaviour
             canShoot = false;
             SpawnBanana(bananas[currentBananaIndex].GetComponent<BananaMovement>());
             ChangeCurrentEnergy(bananas[currentBananaIndex].GetEnergyCost());
-            SetShootInterval(shootInterval);
+            StartCoroutine(SetShootInterval(shootInterval));
+            PlayShootAnimation();
         }
 
+        
         if (Input.GetButtonUp("Shoot"))
         {
-            StopAllCoroutines(); // Pare todas as coroutines SetShootInterval
             canShoot = true;
+            StopAllCoroutines(); // Pare todas as coroutines SetShootInterval
         }
     }
 
@@ -63,10 +74,45 @@ public class PlayerShoot : MonoBehaviour
         _direction = dir;
     }
 
+    public bool GetCanShoot()
+    {
+        return canShoot;
+    }
+
     // Banana
     private void SpawnBanana(BananaMovement b)
     {
-        var banana = Instantiate(b, transform.position, Quaternion.identity);
+        //var rotationZ = Mathf.Atan2(_direction.y, _direction.x) * Mathf.Rad2Deg;
+        var offset = Vector2.zero;
+
+        switch (_shootAnim)
+        {
+            case "Diagonal Up":
+                if (_spr.flipX) offset = new Vector2(-1.22f, 0.45f);
+                else offset = new Vector2(1.22f, 0.45f);
+                break;
+
+            case "Diagonal Down":
+                if (_spr.flipX) offset = new Vector2(-1.22f, -0.45f);
+                else offset = new Vector2(1.22f, -0.45f);
+                break;
+
+            case "Vertical Up":
+                if (_spr.flipX) offset = new Vector2(-0.8f, 0.45f);
+                else offset = new Vector2(0.8f, 0.45f);
+                break;
+
+            case "Vertical Down":
+                if (_spr.flipX) offset = new Vector2(-0.8f, -0.45f);
+                else offset = new Vector2(0.8f, -0.45f);
+                break;
+
+            default:
+                offset = new Vector2(1f, 2f) * _direction;
+                break;
+        }
+
+        var banana = Instantiate(b, transform.position + (Vector3) offset, Quaternion.identity);
         banana.SetDirection(_direction);
     }
 
@@ -110,6 +156,37 @@ public class PlayerShoot : MonoBehaviour
                 bananas[i] = b;
                 break;
             }
+        }
+    }
+
+    public void SetShootAnim(string dirName)
+    {
+        _shootAnim = dirName;
+    }
+
+    private void PlayShootAnimation()
+    {
+        switch (_shootAnim)
+        {
+            case "Diagonal Up":
+                _anim.SetTrigger("shootDiagonalUp");
+                break;
+
+            case "Diagonal Down":
+                _anim.SetTrigger("shootDiagonalDown");
+                break;
+
+            case "Vertical Up":
+                _anim.SetTrigger("shootVerticalUp");
+                break;
+
+            case "Vertical Down":
+                _anim.SetTrigger("shootVerticalDown");
+                break;
+                
+            default:
+                _anim.SetTrigger("shootHorizontal");
+                break;
         }
     }
 }

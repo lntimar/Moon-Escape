@@ -1,0 +1,4 @@
+repository "Smaug3@studio_404_devs@cloud"
+  path "/"
+    smartbranch "/main"       
+     

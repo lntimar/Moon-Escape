@@ -16,10 +16,10 @@ public class BananaType : MonoBehaviour
     public enum Types
     {
         // Todos os Tipos de bananas
-        Normal,
-        Fire,
+        Default,
         Ice,
-        Poison
+        Bomb,
+        Eletric
     }
 
     private void SetType(string name)
@@ -27,20 +27,20 @@ public class BananaType : MonoBehaviour
         // Defino o tipo com base no nome
         switch (name)
         {
-            case "Fire":
-                _type = Types.Fire;
-                break;
-
             case "Ice":
                 _type = Types.Ice;
                 break;
 
-            case "Poison":
-                _type = Types.Poison;
+            case "Bomb":
+                _type = Types.Bomb;
+                break;
+
+            case "Eletric":
+                _type = Types.Eletric;
                 break;
 
             default:
-                _type = Types.Normal;
+                _type = Types.Default;
                 break;
         }
     }
