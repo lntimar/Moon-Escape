@@ -163,7 +163,7 @@ MonoBehaviour:
   Name: Eletric
   Damage: 0
   Speed: 18
-  EnergyCost: 0
+  EnergyCost: 2
   LifeTime: 5
 --- !u!114 &2794644113281055370
 MonoBehaviour:
@@ -177,6 +177,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fcc2144bf19c1f44897a807f1062c45a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  effectColor: {r: 0.38431373, g: 0.09803922, b: 0.50980395, a: 1}
+  bananaEffectPrefab: {fileID: 6576983330063520908, guid: 40aac430ed813c543a55762f7f920aba, type: 3}
 --- !u!114 &-5638413770460895500
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -201,4 +203,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b39145aaf553c2b44aa37b490797cca1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  destroyedBananaPrefab: {fileID: 4190057526781836428, guid: a654e0323b0dda442830409f1197f0a3, type: 3}
   collisionLayers: {fileID: 11400000, guid: 68fa50b41700bab4686a532e8f67a498, type: 2}

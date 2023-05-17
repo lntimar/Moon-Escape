@@ -8,7 +8,8 @@ public class Boss : MonoBehaviour
     public int MaxHealth;
     public int Damage;
     public int Speed;
-    public string Item;
+    public string Name;
+    public BananaType BananaType;
 
     /* Informações que irão ser retiradas do banco de dados
     [HideInInspector] public int MaxHealth { get; private set; }

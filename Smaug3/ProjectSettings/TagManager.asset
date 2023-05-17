@@ -5,6 +5,17 @@ TagManager:
   serializedVersion: 2
   tags:
   - Platform
+  - Fade In
+  - Spawn Returning
+  - Fade Out
+  - Enemy Bullet
+  - Trigger
+  - Health Bar
+  - Banana Icon
+  - Energy Bar
+  - Enemy Attack
+  - Enemy Tag
+  - BossLifeBar
   layers:
   - Default
   - TransparentFX
@@ -22,13 +33,13 @@ TagManager:
   - IgnoreEletric
   - Wall
   - Boss
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - TriggerFlip
+  - TriggerLevel
+  - Bonus
+  - Spike
+  - TriggerMovePoint
+  - Bomb
+  - Ignore
   - 
   - 
   - 

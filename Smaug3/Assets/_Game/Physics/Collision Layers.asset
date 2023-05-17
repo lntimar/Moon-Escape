@@ -23,3 +23,7 @@ MonoBehaviour:
   IgnoreEletricLayer: 13
   WallLayer: 14
   BossLayer: 15
+  TriggerFlipLayer: 16
+  TriggerLevelLayer: 17
+  SpikeLayer: 19
+  TriggerMovePointLayer: 20

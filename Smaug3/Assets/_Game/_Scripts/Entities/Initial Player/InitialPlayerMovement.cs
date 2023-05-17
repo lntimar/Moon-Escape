@@ -41,8 +41,8 @@ public class InitialPlayerMovement : MonoBehaviour
 
     private void Update()
     {
-        // Não execute a verificação de input, caso o player inicial estiver morto / ter tomado dano / está atacando
-        if (InitialPlayerStateMachine.StateManager.IsNotFine() || _playerAttack.IsAttacking) return;
+        // Não execute a verificação de input, caso o player inicial estiver morto / ter tomado dano / está atacando / carregando
+        if (InitialPlayerStateMachine.StateManager.IsNotFine() || InitialPlayerStateMachine.StateManager.CompareState(InitialPlayerStateMachine.InitialPlayerStates.Loading) || _playerAttack.IsAttacking) return;
 
         _anim.SetBool("isGrounded", isGrounded);
 
@@ -54,8 +54,8 @@ public class InitialPlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        // Não aplique algum tipo de física, caso o player inicial estiver morto / ter tomado dano / está atacando
-        if (InitialPlayerStateMachine.StateManager.IsNotFine() || _playerAttack.IsAttacking) return;
+        // Não aplique algum tipo de física, caso o player inicial estiver morto / ter tomado dano / está atacando / carregando
+        if (InitialPlayerStateMachine.StateManager.IsNotFine() || InitialPlayerStateMachine.StateManager.CompareState(InitialPlayerStateMachine.InitialPlayerStates.Loading) || _playerAttack.IsAttacking) return;
 
         CoyoteTime();
 

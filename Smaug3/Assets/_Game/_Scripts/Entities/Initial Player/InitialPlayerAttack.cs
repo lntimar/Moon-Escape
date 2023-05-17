@@ -5,7 +5,7 @@ using UnityEngine;
 public class InitialPlayerAttack : MonoBehaviour
 {
     [Header("Attack:")]
-    [SerializeField] private float damage;
+    public int damage;
     [SerializeField] private bool canAttack = true;
     [SerializeField] private BoxCollider2D hitbox;
     [SerializeField] private SpriteRenderer attackSprite;
@@ -33,10 +33,18 @@ public class InitialPlayerAttack : MonoBehaviour
 
     private void AttackInput()
     {
-        if (canAttack && Input.GetButtonDown("Shoot"))
+        if(canAttack)
         {
-            canAttack = false;
-            attackAnim.SetTrigger("attack");
+            if (Input.GetButtonDown("Shoot Mouse"))
+            {
+                canAttack = false;
+                attackAnim.SetTrigger("attack");
+            }
+            else if (Input.GetButtonDown("Shoot Key"))
+            {
+                canAttack = false;
+                attackAnim.SetTrigger("attack");
+            }
         }
     }
 

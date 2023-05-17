@@ -5,12 +5,10 @@ using UnityEngine;
 public class BananaType : MonoBehaviour
 {
     private Types _type;
-    private int _energyCost;
 
     private void Awake()
     {
         SetType(GetComponent<Banana>().Name);
-        SetEnergyCost(GetComponent<Banana>().EnergyCost);
     }
 
     public enum Types
@@ -45,20 +43,13 @@ public class BananaType : MonoBehaviour
         }
     }
 
-    public Types GetType()
+    public Types GetBananaType()
     {
         return _type;
     }
 
-    private void SetEnergyCost(int cost)
-    {
-        _energyCost = cost;
-    }
-
     public int GetEnergyCost()
     {
-        return _energyCost;
+        return GetComponent<Banana>().EnergyCost;
     }
-
-    // TODO: Efeitos Bananas
 }

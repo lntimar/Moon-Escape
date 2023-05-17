@@ -10,7 +10,7 @@ public class BlinkSpriteVFX : MonoBehaviour
     // Components
     private SpriteRenderer _spr;
 
-    private bool _isBlinking = false;
+    private bool _isBlinking;
 
     private void Start()
     {

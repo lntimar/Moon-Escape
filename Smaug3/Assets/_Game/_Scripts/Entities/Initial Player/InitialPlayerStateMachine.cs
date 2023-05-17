@@ -17,7 +17,8 @@ public class InitialPlayerStateMachine : MonoBehaviour
         Dead,
         Idle,
         Moving,
-        Damaged
+        Damaged,
+        Loading
     };
 
     private void Awake()

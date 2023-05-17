@@ -17,7 +17,9 @@ public class PlayerStateMachine : MonoBehaviour
         Dead,
         Idle,
         Moving,
-        Damaged
+        Dashing,
+        Damaged,
+        Loading
     };
 
     private void Awake()

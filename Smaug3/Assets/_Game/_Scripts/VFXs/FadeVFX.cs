@@ -1,12 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class Fade : MonoBehaviour
+public class FadeVFX : MonoBehaviour
 {
     // Unity Access Fields
     [SerializeField] private FadeType type;
     [SerializeField] private float speed;
+    [SerializeField] private bool isUI;
 
     private enum FadeType
     {
@@ -16,10 +18,12 @@ public class Fade : MonoBehaviour
 
     // Components
     private SpriteRenderer _spr;
+    private Image _img;
 
     private void Start()
     {
-        _spr = GetComponent<SpriteRenderer>();
+        if (isUI) _img = GetComponent<Image>();
+        else _spr = GetComponent<SpriteRenderer>();
     }
 
     private void Update()
@@ -29,7 +33,10 @@ public class Fade : MonoBehaviour
 
     private void ApplyFade()
     {
-        var color = _spr.color;
+        Color color;
+        if (isUI) color = _img.color;
+        else color = _spr.color;
+
         var alpha = color.a;
 
         if (type == FadeType.FadeOut)
@@ -38,7 +45,8 @@ public class Fade : MonoBehaviour
             {
                 alpha -= speed * Time.deltaTime;
                 color.a = alpha;
-                _spr.color = color;
+                if (isUI) _img.color = color;
+                else _spr.color = color;
             }
             else
             {
@@ -51,7 +59,8 @@ public class Fade : MonoBehaviour
             {
                 alpha += speed * Time.deltaTime;
                 color.a = alpha;
-                _spr.color = color;
+                if (isUI) _img.color = color;
+                else _spr.color = color;
             }
             else
             {

@@ -7,14 +7,20 @@ public class PlayerShoot : MonoBehaviour
 {
     [Header("Shoot:")]
     [SerializeField] private float shootInterval;
-    [SerializeField, ReadOnly] private bool canShoot = true;
+    [SerializeField] private bool canShoot = true;
 
     [Header("Types:")] 
     [SerializeField] private int defaultBananaIndex;
-    [SerializeField] private int currentBananaIndex;
-    [SerializeField] private int maxEnergy; // Provavelmente vai ser static
-    [SerializeField] private int currentEnergy; // Provavelmente vai ser static
+    private static int currentBananaIndex;
+    public int maxEnergy;
+    [SerializeField] private int inspectorCurrentEnergy;
+    public static int currentEnergy;
     [SerializeField] private BananaType[] bananas = new BananaType[4]; // Lista dos tipos de bananas que possuo no momento
+    [SerializeField] private BananaType[] setBananas; 
+
+    // References
+    private PlayerEnergyBar _playerEnergyBar;
+    private PlayerBananaIcon _playerBananaIcon;
 
     // Components
     private Animator _anim;
@@ -24,14 +30,37 @@ public class PlayerShoot : MonoBehaviour
     private Vector2 _direction;
     private string _shootAnim;
 
+    private void Awake() => currentEnergy = 0;
+
+    public static ProgressBanana hasBananas = ProgressBanana.HasNothing;
+
+    public enum ProgressBanana
+    {
+        HasNothing,
+        HasIce,
+        HasBomb,
+        HasEletric
+    }
+
     private void Start()
     {
         _anim = GetComponent<Animator>();
         _spr = GetComponent<SpriteRenderer>();
+        _playerEnergyBar = GameObject.FindGameObjectWithTag("Energy Bar").GetComponent<PlayerEnergyBar>();
 
         // Colocando os Valores Iniciais
         currentBananaIndex = defaultBananaIndex;
-        ChangeCurrentEnergy(maxEnergy);
+
+        if (currentEnergy == 0)
+        {
+            ChangeCurrentEnergy(maxEnergy);
+        }
+
+        SetBananas();
+
+        _playerBananaIcon = GameObject.FindGameObjectWithTag("Banana Icon").GetComponent<PlayerBananaIcon>();
+        
+        if (_playerBananaIcon != null) _playerBananaIcon.SetCurrentIcon(currentBananaIndex);
     }
 
     private void Update()
@@ -41,22 +70,35 @@ public class PlayerShoot : MonoBehaviour
 
         ShootInput();
         ChangeInput();
+
+        inspectorCurrentEnergy = currentEnergy;
     }
 
     // Disparo
     private void ShootInput()
     {
-        if (canShoot && Input.GetButton("Shoot") && currentEnergy - bananas[currentBananaIndex].GetEnergyCost() >= 0)
+        if (canShoot && currentEnergy - bananas[currentBananaIndex].GetEnergyCost() >= 0)
         {
-            canShoot = false;
-            SpawnBanana(bananas[currentBananaIndex].GetComponent<BananaMovement>());
-            ChangeCurrentEnergy(bananas[currentBananaIndex].GetEnergyCost());
-            StartCoroutine(SetShootInterval(shootInterval));
-            PlayShootAnimation();
+            if (Input.GetButton("Shoot Mouse"))
+            {
+                canShoot = false;
+                SpawnBanana(bananas[currentBananaIndex].GetComponent<BananaMovement>());
+                ChangeCurrentEnergy(-bananas[currentBananaIndex].GetEnergyCost());
+                StartCoroutine(SetShootInterval(shootInterval));
+                PlayShootAnimation();
+            }
+            else if (Input.GetButton("Shoot Key"))
+            {
+                canShoot = false;
+                SpawnBanana(bananas[currentBananaIndex].GetComponent<BananaMovement>());
+                ChangeCurrentEnergy(-bananas[currentBananaIndex].GetEnergyCost());
+                StartCoroutine(SetShootInterval(shootInterval));
+                PlayShootAnimation();
+            }
         }
 
         
-        if (Input.GetButtonUp("Shoot"))
+        if (Input.GetButtonUp("Shoot Mouse") || Input.GetButtonUp("Shoot Key"))
         {
             canShoot = true;
             StopAllCoroutines(); // Pare todas as coroutines SetShootInterval
@@ -72,11 +114,6 @@ public class PlayerShoot : MonoBehaviour
     public void SetDirection(Vector2 dir)
     {
         _direction = dir;
-    }
-
-    public bool GetCanShoot()
-    {
-        return canShoot;
     }
 
     // Banana
@@ -117,14 +154,16 @@ public class PlayerShoot : MonoBehaviour
     }
 
     // Energia
-    public void ChangeMaxEnergy(int increment)
-    {
-        maxEnergy += increment;
-    }
 
     public void ChangeCurrentEnergy(int increment)
     {
         currentEnergy = Mathf.Clamp(currentEnergy + increment, 0, maxEnergy);
+        _playerEnergyBar.SetEnergyBar(currentEnergy);
+    }
+
+    public int GetCurrentEnergy()
+    {
+        return currentEnergy;
     }
 
     // Troca de tipo
@@ -140,11 +179,17 @@ public class PlayerShoot : MonoBehaviour
             {
                 currentBananaIndex++;
             }
+            else
+            {
+                currentBananaIndex = defaultBananaIndex;
+            }
         }
         else if (Input.GetButtonDown("Change Default Banana")) // Troca para a default
         {
             currentBananaIndex = defaultBananaIndex;
         }
+
+        if (_playerBananaIcon != null) _playerBananaIcon.SetCurrentIcon(currentBananaIndex);
     }
 
     public void AddBananaType(BananaType b)
@@ -188,5 +233,34 @@ public class PlayerShoot : MonoBehaviour
                 _anim.SetTrigger("shootHorizontal");
                 break;
         }
+    }
+
+    private void SetBananas()
+    {
+        switch (hasBananas)
+        {
+            case ProgressBanana.HasIce:
+                AddBananaType(setBananas[0]);
+                break;
+
+            case ProgressBanana.HasBomb:
+                print("Test");
+                AddBananaType(setBananas[0]);
+                AddBananaType(setBananas[1]);
+                break;
+
+            case ProgressBanana.HasEletric:
+                AddBananaType(setBananas[0]);
+                AddBananaType(setBananas[1]);
+                AddBananaType(setBananas[2]);
+                break;
+        }
+    }
+
+    public void ResetBananaIcon()
+    {
+        _playerBananaIcon = GameObject.FindGameObjectWithTag("Banana Icon").GetComponent<PlayerBananaIcon>();
+
+       _playerBananaIcon.SetCurrentIcon(currentBananaIndex);
     }
 }

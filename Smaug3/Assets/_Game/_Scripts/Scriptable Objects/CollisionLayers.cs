@@ -16,4 +16,8 @@ public class CollisionLayers : ScriptableObject
     public int IgnoreEletricLayer;
     public int WallLayer;
     public int BossLayer;
+    public int TriggerFlipLayer;
+    public int TriggerLevelLayer;
+    public int SpikeLayer;
+    public int TriggerMovePointLayer;
 }

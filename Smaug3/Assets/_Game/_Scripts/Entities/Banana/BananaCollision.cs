@@ -9,6 +9,9 @@ public class BananaCollision : MonoBehaviour
     private BananaType _bananaType;
     private BananaMovement _bananaMovement;
 
+    [Header("Destroyed Banana:")] 
+    [SerializeField] private DestroyedBanana destroyedBananaPrefab;
+
     [Header("Collision Layers:")]
     [SerializeField] CollisionLayers collisionLayers;
 
@@ -26,18 +29,44 @@ public class BananaCollision : MonoBehaviour
         if (col.gameObject.TryGetComponent<EnemyCollision>(out EnemyCollision enemyCol))
         {
             enemyCol.ChangeCurrentHealth(-_banana.Damage);
-            enemyCol.ApplyEffect(_bananaType.GetType());
+            var enemyBehaviour = col.gameObject.GetComponent<EnemyBehaviour>();
 
-            if (_bananaType.GetType() == BananaType.Types.Default || _bananaType.GetType() == BananaType.Types.Bomb)
+            if (enemyBehaviour.shooting == false || enemyBehaviour.chasing == false)
             {
-                enemyCol.ApplyKnockback(_bananaMovement.GetDirection());
+                var sprRender = col.gameObject.GetComponent<SpriteRenderer>();
+                sprRender.enabled = true;
+                enemyBehaviour.chasing = true;
+                sprRender.flipX = !sprRender.flipX;
             }
+
+            if (_bananaType.GetBananaType() == BananaType.Types.Default || _bananaType.GetBananaType() == BananaType.Types.Bomb)
+            {
+                enemyCol.ApplyKnockback(_bananaMovement.GetDirection(), 1f);
+            }
+
+            enemyCol.ApplyEffect(_bananaType.GetBananaType());
         }
         else if (col.gameObject.TryGetComponent<BossCollision>(out BossCollision bossCol))
         {
             bossCol.ChangeCurrentHealth(-_banana.Damage);
-            bossCol.ApplyEffect(_bananaType.GetType());
+            bossCol.ApplyEffect(_bananaType.GetBananaType());
         }
-        Destroy(gameObject);
+
+
+        if (col.gameObject.tag != "Enemy Bullet" && col.gameObject.tag != "Trigger") Destroy(gameObject);
+    }
+
+    private void OnDestroy()
+    {
+        var destroyedBanana = Instantiate(destroyedBananaPrefab, transform.position, Quaternion.identity);
+        destroyedBanana.SwitchAnimation(_bananaType.GetBananaType());
+
+        destroyedBanana.gameObject.GetComponent<SpriteRenderer>().flipX = GetComponent<SpriteRenderer>().flipX;
+
+        float bananaDirY = _bananaMovement.GetDirection().y;
+        if (bananaDirY != 0)
+        {
+            destroyedBanana.transform.rotation = Quaternion.Euler(0f, 0f, 90f * Mathf.Sign(bananaDirY));
+        }
     }
 }

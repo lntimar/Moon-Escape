@@ -6,6 +6,18 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 0
-    path: Assets/_Game/Scenes/SampleScene.unity
-    guid: 2cda990e2423bbf4892e6590ba056729
+    path: 
+    guid: 00000000000000000000000000000000
+  - enabled: 1
+    path: Assets/_Game/Scenes/Prototype/Test Dash.unity
+    guid: 62bc26f2db0e9b44d9ac3d464828f092
+  - enabled: 1
+    path: Assets/_Game/Scenes/Levels/Armazem.unity
+    guid: ea9b23b6cda199b41962df5fcae1e89f
+  - enabled: 0
+    path: 
+    guid: 00000000000000000000000000000000
+  - enabled: 1
+    path: Assets/_Game/Scenes/Levels/Sala da Armadura.unity
+    guid: 0a5bd999f2450654cb79c5150407405f
   m_configObjects: {}
