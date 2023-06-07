@@ -11,6 +11,9 @@ public class InitialPlayerAttack : MonoBehaviour
     [SerializeField] private SpriteRenderer attackSprite;
     [SerializeField] private Animator attackAnim;
 
+    // References
+    private AudioManager _audioManager;
+
     // Components
     private Rigidbody2D _rb;
     private SpriteRenderer _spr;
@@ -21,6 +24,8 @@ public class InitialPlayerAttack : MonoBehaviour
     {
         _rb = GetComponent<Rigidbody2D>();
         _spr = GetComponent<SpriteRenderer>();
+
+        _audioManager = GameObject.FindGameObjectWithTag("AudioManager").GetComponent<AudioManager>();
     }
 
     private void Update()
@@ -39,11 +44,13 @@ public class InitialPlayerAttack : MonoBehaviour
             {
                 canAttack = false;
                 attackAnim.SetTrigger("attack");
+                _audioManager.PlaySFX("macaquinho caindo");
             }
             else if (Input.GetButtonDown("Shoot Key"))
             {
                 canAttack = false;
                 attackAnim.SetTrigger("attack");
+                _audioManager.PlaySFX("macaquinho caindo");
             }
         }
     }

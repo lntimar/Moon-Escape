@@ -9,6 +9,9 @@ public class IceTrapSpawner : MonoBehaviour
 
     [HideInInspector] public bool CanDrop = true;
 
+    // References
+    private AudioManager _audioManager;
+
     // Components
     private Animator _anim;
     
@@ -16,6 +19,7 @@ public class IceTrapSpawner : MonoBehaviour
     private void Start()
     {
         _anim = GetComponent<Animator>();
+        _audioManager = GameObject.FindGameObjectWithTag("AudioManager").GetComponent<AudioManager>();
     }
 
     public void DropIceTrap()
@@ -23,6 +27,7 @@ public class IceTrapSpawner : MonoBehaviour
         if (CanDrop)
         {
             Instantiate(iceTrapPrefab, spawnIceTrapPosition.position, Quaternion.identity);
+            _audioManager.PlaySFX("estalactite desgrudando");
             _anim.Play("IceTrapSpawner Wait Animation");
         }
     }

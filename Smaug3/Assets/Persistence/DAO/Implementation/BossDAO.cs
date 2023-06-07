@@ -55,15 +55,22 @@ namespace Assets.Scripts.Persistence.DAO.Implementation
                     var reader = command.ExecuteReader();
                     if (reader.Read())
                     {
-                         boss = new BossModel();
-                         boss.Id = reader.GetInt32(0);
-                         boss.MaxHealth = reader.GetInt32(1);
-                         boss.Damage = reader.GetInt32(2);
-                         boss.Name = reader.GetString(3);
-                         boss.MoveSpeed = reader.GetFloat(4);
-                         boss.BananaId = reader.GetInt32(5);
+                        boss = new BossModel();
+                        boss.Id = reader.GetInt32(0);
+                        boss.MaxHealth = reader.GetInt32(1);
+                        boss.Damage = reader.GetInt32(2);
+                        boss.Name = reader.GetString(3);
+                        boss.MoveSpeed = reader.GetFloat(4);
 
-                        Debug.Log("\tid:" + reader["Id"] + "\tvida:" + reader["MaxHealth"] + "dano:" + reader["Damage"] + "\tnome:" + reader["Name"] + "\tvelocidade:" + reader["MoveSpeed"] + "\tbananaid:" + reader["BananaId"]);
+                        if (boss.Id != 1 && boss.Id != 5)
+                        {
+                            boss.BananaId = reader.GetInt32(5);
+                            Debug.Log("\tid:" + reader["Id"] + "\tvida:" + reader["MaxHealth"] + "dano:" + reader["Damage"] + "\tnome:" + reader["Name"] + "\tvelocidade:" + reader["MoveSpeed"] + "\tbananaid:" + reader["BananaId"]);
+                        }
+                        else
+                        {
+                            Debug.Log("\tid:" + reader["Id"] + "\tvida:" + reader["MaxHealth"] + "dano:" + reader["Damage"] + "\tnome:" + reader["Name"] + "\tvelocidade:" + reader["MoveSpeed"] + "\tbananaid: NULL");
+                        }
                     }
                 }
                 return boss;
@@ -103,7 +110,7 @@ namespace Assets.Scripts.Persistence.DAO.Implementation
              "MoveSpeed = @moveSpeed," +
              "BananaId = @bananaId" +
              "WHERE Id=@id;";
- 
+
             using (var connection = ConnectionProvider.Connection)
             {
                 connection.Open();

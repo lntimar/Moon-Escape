@@ -122,6 +122,9 @@ GameObject:
   - component: {fileID: 1493113705257262059}
   - component: {fileID: 1493113705257262057}
   - component: {fileID: 1493113705257262063}
+  - component: {fileID: 6462754673108734610}
+  - component: {fileID: 1332100577592915339}
+  - component: {fileID: 2134777369286745090}
   m_Layer: 15
   m_Name: Gorila Eletric
   m_TagString: Untagged
@@ -291,6 +294,8 @@ MonoBehaviour:
   - {fileID: 3131415421768167641}
   endBossFightTime: 3
   collisionLayers: {fileID: 11400000, guid: 68fa50b41700bab4686a532e8f67a498, type: 2}
+  nextBanana: {fileID: 0}
+  curBanana: {fileID: 0}
   BehaviourScript: {fileID: 0}
 --- !u!114 &1493113705257262057
 MonoBehaviour:
@@ -329,6 +334,48 @@ MonoBehaviour:
   eletricTrapsSets: []
   collisionLayers: {fileID: 11400000, guid: 68fa50b41700bab4686a532e8f67a498, type: 2}
   bombEffectTransform: {fileID: 6424848225745189018}
+--- !u!114 &6462754673108734610
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1493113705257262070}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d25a3e09c38bef54093520c3f75d228f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  minBonusHealth: 4
+  minBonusEnergy: 4
+  itemLifePrefab: {fileID: 7324032329419909800, guid: 7110bc829f227f14188c2fd37ee8bf45, type: 3}
+  itemEnergyPrefab: {fileID: 7324032329419909800, guid: eb86b6ee97bd4e949bb66982cf70d9d3, type: 3}
+--- !u!114 &1332100577592915339
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1493113705257262070}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf0656c468a9ac1409fb46b7084256c1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &2134777369286745090
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1493113705257262070}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ea5ae95e03c41641bc37b24e05119c4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  effectColor: {r: 0.9245283, g: 0.9201673, b: 0.9201673, a: 1}
+  bossEffectPrefab: {fileID: 6576983330063520908, guid: 5aef299cec0b2514eb37bbea4b99f679, type: 3}
 --- !u!1 &1493113706868131368
 GameObject:
   m_ObjectHideFlags: 0

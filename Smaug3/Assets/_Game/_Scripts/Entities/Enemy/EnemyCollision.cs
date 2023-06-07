@@ -23,6 +23,9 @@ public class EnemyCollision : MonoBehaviour
     [SerializeField] private int minBonusHealth;
     [SerializeField] private int minBonusEnergy;
 
+    // References
+    private AudioManager _audioManager;
+
     // Components
     private CapsuleCollider2D _hitbox;
     private SpriteRenderer _spr;
@@ -43,6 +46,8 @@ public class EnemyCollision : MonoBehaviour
         _enemyBehaviour = GetComponent<EnemyBehaviour>();
         _blink = GetComponent<BlinkSpriteVFX>();
         _rb = GetComponent<Rigidbody2D>();
+
+        _audioManager = GameObject.FindGameObjectWithTag("AudioManager").GetComponent<AudioManager>();
 
         ChangeCurrentHealth(_enemy.MaxHealth);
     }
@@ -89,6 +94,7 @@ public class EnemyCollision : MonoBehaviour
             _spr.flipX = false;
             _blink.enabled = false;
 
+            _audioManager.PlaySFX("alien morrendo");
             _anim.Play("Death Animation");
         }
     }

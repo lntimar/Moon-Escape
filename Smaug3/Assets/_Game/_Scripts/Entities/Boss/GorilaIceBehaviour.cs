@@ -22,6 +22,7 @@ public class GorilaIceBehaviour : MonoBehaviour
 
     // References
     private GameObject _player;
+    private AudioManager _audioManager;
 
     // Components
     private SpriteRenderer _spr;
@@ -55,8 +56,11 @@ public class GorilaIceBehaviour : MonoBehaviour
         _bossCollisionScript = GetComponent<BossCollision>();
 
         _player = GameObject.FindGameObjectWithTag("Player");
+        _audioManager = GameObject.FindGameObjectWithTag("AudioManager").GetComponent<AudioManager>();
 
         StartCoroutine(FlipX(flipXInterval));
+
+        _audioManager.PlayMusic("gorila ice");
     }
 
     private void Update()
@@ -68,9 +72,12 @@ public class GorilaIceBehaviour : MonoBehaviour
 
         if (Vector2.Distance(transform.position, _player.transform.position) <= 6f)
         {
-            _anim.Play("Gorila Ice Attack Animation");
-            _isWaiting = false;
-            _canChange = false;
+            if (Random.Range(0, 100) < 5)
+            {
+                _anim.Play("Gorila Ice Attack Animation");
+                _isWaiting = false;
+                _canChange = false;
+            }
         }
     }
 
@@ -115,7 +122,7 @@ public class GorilaIceBehaviour : MonoBehaviour
 
     public void EnableIceTraps()
     {
-        if (iceTrapSpawners[0].CanDrop && Vector2.Distance(transform.position, _player.transform.position) >= minDistanceIceTraps)
+        if (iceTrapSpawners[0].CanDrop)
         {
             // Ativar as estalactites
             StartCoroutine(SetIceTraps(setIceTrapsInterval));

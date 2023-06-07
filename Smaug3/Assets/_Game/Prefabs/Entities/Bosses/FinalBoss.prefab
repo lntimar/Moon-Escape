@@ -171,6 +171,8 @@ GameObject:
   - component: {fileID: 2604633532506861458}
   - component: {fileID: 2604633532506861456}
   - component: {fileID: 2604633532506861463}
+  - component: {fileID: 5859935972785171348}
+  - component: {fileID: 7145493260640134179}
   m_Layer: 15
   m_Name: FinalBoss
   m_TagString: Untagged
@@ -343,7 +345,7 @@ MonoBehaviour:
   - {fileID: 3620307029474852890}
   - {fileID: 2010886752439354528}
   - {fileID: 6915341229644776201}
-  endBossFightTime: 3
+  endBossFightTime: 7
   collisionLayers: {fileID: 11400000, guid: 68fa50b41700bab4686a532e8f67a498, type: 2}
   nextBanana: {fileID: 0}
   curBanana: {fileID: 0}
@@ -391,6 +393,36 @@ MonoBehaviour:
   - {fileID: 7813003848432506293}
   - {fileID: 7777111889533984034}
   - {fileID: 4324392894399307930}
+--- !u!114 &5859935972785171348
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2604633532506861455}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d25a3e09c38bef54093520c3f75d228f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  minBonusHealth: 4
+  minBonusEnergy: 4
+  itemLifePrefab: {fileID: 7324032329419909800, guid: 7110bc829f227f14188c2fd37ee8bf45, type: 3}
+  itemEnergyPrefab: {fileID: 7324032329419909800, guid: eb86b6ee97bd4e949bb66982cf70d9d3, type: 3}
+--- !u!114 &7145493260640134179
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2604633532506861455}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ea5ae95e03c41641bc37b24e05119c4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  effectColor: {r: 0.6886792, g: 0.6886792, b: 0.6886792, a: 1}
+  bossEffectPrefab: {fileID: 6576983330063520908, guid: 5aef299cec0b2514eb37bbea4b99f679, type: 3}
 --- !u!1 &3204927299770916395
 GameObject:
   m_ObjectHideFlags: 0

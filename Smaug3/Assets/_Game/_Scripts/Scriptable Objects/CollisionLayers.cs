@@ -20,4 +20,6 @@ public class CollisionLayers : ScriptableObject
     public int TriggerLevelLayer;
     public int SpikeLayer;
     public int TriggerMovePointLayer;
+    public int DoorTriggerLayer;
+    public int ArmorTriggerLayer;
 }

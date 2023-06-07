@@ -30,11 +30,10 @@ namespace Assets.Scripts.Persistence.DAO.Implementation
             throw new NotImplementedException();
         }
 
-        // ARMAS E RESPECTIVOS PERSONAGEMES QUE A UTILIZAM
         public void BananaINNERBoss()
         {
             var commandText = "SELECT * FROM Banana INNER JOIN Boss on Banana.Id=Boss.BananaId";
-            //Arma arma = null;
+            //BananaModel banana = null;
 
             using (var connection = ConnectionProvider.Connection)
             {
@@ -48,13 +47,14 @@ namespace Assets.Scripts.Persistence.DAO.Implementation
                     var reader = command.ExecuteReader();
                     while (reader.Read())
                     {
-                        /*arma = new Arma();
-                        
-                        arma.Id = reader.GetInt32(0);
-                        arma.Nome = reader.GetString(1);
-                        arma.Ataque = reader.GetInt32(2);
-                        arma.Preco = reader.GetDouble(3); */
-                        //Debug.Log("\tid:" + reader["id"] + "nome:" + reader["nome"] + "\tataque:" + reader["ataque"] + "\tpreco:" + reader["preco"] + "\tarmaId:" + reader["armaId"] + "\thealth:" + reader["health"]);
+                        /*banana  = new BananaModel();
+                        banana.Id = reader.GetInt32(0);
+                        banana.Damage = reader.GetInt32(1);
+                        banana.Name = reader.GetString(2);
+                        banana.EnergyCost = reader.GetInt32(3);
+                        banana.MoveSpeed = reader.GetFloat(4);
+                        Debug.Log("\tid:" + reader["Id"] + "dano:" + reader["Damage"] + "\tnome:" + reader["Name"] + "\tenergia:" + reader["EnergyCost"] + "\tvelocidade:" + reader["MoveSpeed"]); 
+                        */
 
                     }
                     reader.Close();
@@ -63,11 +63,10 @@ namespace Assets.Scripts.Persistence.DAO.Implementation
             }
         }
 
-        // AQUI IMPLEMENTA-SE O LEFT SUPONDO QUE HAJA ALGUMA ARMA SEM PERSONAGEM
         public void BananaLEFTBoss()
         {
             var commandText = "SELECT * FROM Banana LEFT JOIN Boss on Banana.Id=Boss.BananaId";
-            //Arma arma = null;
+            //BananaModel banana = null;
 
             using (var connection = ConnectionProvider.Connection)
             {
@@ -81,14 +80,14 @@ namespace Assets.Scripts.Persistence.DAO.Implementation
                     var reader = command.ExecuteReader();
                     while (reader.Read())
                     {
-                        /*arma = new Arma();
-                        
-                        arma.Id = reader.GetInt32(0);
-                        arma.Nome = reader.GetString(1);
-                        arma.Ataque = reader.GetInt32(2);
-                        arma.Preco = reader.GetDouble(3); */
-                        //Debug.Log("\tid:" + reader["id"] + "nome:" + reader["nome"] + "\tataque:" + reader["ataque"] + "\tpreco:" + reader["preco"] + "\tarmaId:" + reader["armaId"] + "\thealth:" + reader["health"]);
-
+                        /*banana  = new BananaModel();
+                        banana.Id = reader.GetInt32(0);
+                        banana.Damage = reader.GetInt32(1);
+                        banana.Name = reader.GetString(2);
+                        banana.EnergyCost = reader.GetInt32(3);
+                        banana.MoveSpeed = reader.GetFloat(4);
+                        Debug.Log("\tid:" + reader["Id"] + "dano:" + reader["Damage"] + "\tnome:" + reader["Name"] + "\tenergia:" + reader["EnergyCost"] + "\tvelocidade:" + reader["MoveSpeed"]); 
+                        */
                     }
                     reader.Close();
                 }

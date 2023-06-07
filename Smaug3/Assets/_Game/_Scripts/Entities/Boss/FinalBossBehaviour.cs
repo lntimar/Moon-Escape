@@ -29,9 +29,13 @@ public class FinalBossBehaviour : MonoBehaviour
     [Header("Companions:")] 
     public GameObject[] Companions;
 
+    // References
+    private AudioManager _audioManager;
+
     // Components
     private Boss _bossScript;
     private BossCollision _bossCollisionScript;
+    private DropItem _dropItem;
 
     // Movement
     private bool _canMove = false;
@@ -45,6 +49,11 @@ public class FinalBossBehaviour : MonoBehaviour
     {
         _bossScript = GetComponent<Boss>();
         _bossCollisionScript = GetComponent<BossCollision>();
+        _dropItem = GetComponent<DropItem>();
+
+        _audioManager = GameObject.FindGameObjectWithTag("AudioManager").GetComponent<AudioManager>();
+
+        _audioManager.PlayMusic("final boss");
     }
 
     private void Update()
@@ -86,12 +95,14 @@ public class FinalBossBehaviour : MonoBehaviour
         _canMove = true;
         _canFloatMove = false;
         StartCoroutine(EnableLaser(Random.Range(minLaserTime, maxLaserTime)));
-
+        
         int newPoint = Random.Range(0, movePoints.Length);
         while (_selectedPoint == newPoint)
         {
             newPoint = Random.Range(0, movePoints.Length);
         }
+
+        _dropItem.SpawnBonus(true);
 
         _selectedPoint = newPoint;
     }

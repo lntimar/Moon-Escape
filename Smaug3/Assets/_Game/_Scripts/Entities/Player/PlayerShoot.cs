@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Unity.Collections;
+using UnityEditor;
 using UnityEngine;
 
 public class PlayerShoot : MonoBehaviour
@@ -21,6 +22,7 @@ public class PlayerShoot : MonoBehaviour
     // References
     private PlayerEnergyBar _playerEnergyBar;
     private PlayerBananaIcon _playerBananaIcon;
+    private AudioManager _audioManager;
 
     // Components
     private Animator _anim;
@@ -47,6 +49,7 @@ public class PlayerShoot : MonoBehaviour
         _anim = GetComponent<Animator>();
         _spr = GetComponent<SpriteRenderer>();
         _playerEnergyBar = GameObject.FindGameObjectWithTag("Energy Bar").GetComponent<PlayerEnergyBar>();
+        _audioManager = GameObject.FindGameObjectWithTag("AudioManager").GetComponent<AudioManager>();
 
         // Colocando os Valores Iniciais
         currentBananaIndex = defaultBananaIndex;
@@ -82,6 +85,7 @@ public class PlayerShoot : MonoBehaviour
             if (Input.GetButton("Shoot Mouse"))
             {
                 canShoot = false;
+                _audioManager.PlaySFX("macaquinho caindo");
                 SpawnBanana(bananas[currentBananaIndex].GetComponent<BananaMovement>());
                 ChangeCurrentEnergy(-bananas[currentBananaIndex].GetEnergyCost());
                 StartCoroutine(SetShootInterval(shootInterval));
@@ -90,6 +94,7 @@ public class PlayerShoot : MonoBehaviour
             else if (Input.GetButton("Shoot Key"))
             {
                 canShoot = false;
+                _audioManager.PlaySFX("macaquinho caindo");
                 SpawnBanana(bananas[currentBananaIndex].GetComponent<BananaMovement>());
                 ChangeCurrentEnergy(-bananas[currentBananaIndex].GetEnergyCost());
                 StartCoroutine(SetShootInterval(shootInterval));
@@ -97,12 +102,13 @@ public class PlayerShoot : MonoBehaviour
             }
         }
 
-        
+        /*
         if (Input.GetButtonUp("Shoot Mouse") || Input.GetButtonUp("Shoot Key"))
         {
             canShoot = true;
             StopAllCoroutines(); // Pare todas as coroutines SetShootInterval
         }
+        */
     }
 
     private IEnumerator SetShootInterval(float time)
@@ -116,7 +122,6 @@ public class PlayerShoot : MonoBehaviour
         _direction = dir;
     }
 
-    // Banana
     private void SpawnBanana(BananaMovement b)
     {
         //var rotationZ = Mathf.Atan2(_direction.y, _direction.x) * Mathf.Rad2Deg;
@@ -164,6 +169,11 @@ public class PlayerShoot : MonoBehaviour
     public int GetCurrentEnergy()
     {
         return currentEnergy;
+    }
+
+    public int GetMaxEnergy()
+    {
+        return maxEnergy;
     }
 
     // Troca de tipo

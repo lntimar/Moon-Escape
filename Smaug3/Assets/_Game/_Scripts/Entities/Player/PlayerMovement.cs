@@ -30,6 +30,9 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float dashEffectInterval;
     [SerializeField] private GameObject dashEffectPrefab;
 
+    // References
+    private AudioManager _audioManager;
+
     // Components
     private Rigidbody2D _rb;
     private SpriteRenderer _spr;
@@ -49,6 +52,10 @@ public class PlayerMovement : MonoBehaviour
     // Gravity
     private float _rbGravity;
 
+    // Steps
+    private bool _canPlaySteps = true;
+    private int _lastStep = 2;
+
     private void Start()
     {
         _rb = GetComponent<Rigidbody2D>();
@@ -57,6 +64,8 @@ public class PlayerMovement : MonoBehaviour
         _playerShoot = GetComponent<PlayerShoot>();
 
         _rbGravity = _rb.gravityScale;
+
+        _audioManager = GameObject.FindGameObjectWithTag("AudioManager").GetComponent<AudioManager>();
     }
 
     private void Update()
@@ -211,7 +220,25 @@ public class PlayerMovement : MonoBehaviour
 
         _rb.velocity = new Vector2(SetVelocity(MoveSpeed * _dirH, _rb.velocity.x, acceleration), _rb.velocity.y);
 
-        if (_rb.velocity.x != 0) PlayerStateMachine.StateManager.SetState(PlayerStateMachine.PlayerStates.Moving);
+        if (_rb.velocity.x != 0)
+        {
+            PlayerStateMachine.StateManager.SetState(PlayerStateMachine.PlayerStates.Moving);
+            if (_canPlaySteps)
+            {
+                if (_lastStep == 2)
+                {
+                    _audioManager.PlaySFX("passos mecha 1");
+                    _lastStep = 1;
+                }
+                else
+                {
+                    _audioManager.PlaySFX("passos mecha 2");
+                    _lastStep = 2;
+                }
+                _canPlaySteps = false;
+                StartCoroutine(PlayStepsInterval(0.5f));
+            }
+        }
         else PlayerStateMachine.StateManager.SetState(PlayerStateMachine.PlayerStates.Idle);
     }
 
@@ -240,6 +267,7 @@ public class PlayerMovement : MonoBehaviour
             _rb.velocity = new Vector2(_rb.velocity.x, 0f);
             _rb.AddForce(new Vector2(0f, jumpForce), ForceMode2D.Impulse);
             _anim.SetTrigger("jump");
+            _audioManager.PlaySFX("pulo");
         }
     }
 
@@ -271,6 +299,7 @@ public class PlayerMovement : MonoBehaviour
             Physics2D.IgnoreLayerCollision(collisionLayers.PlayerLayer, collisionLayers.BossLayer, true);
             Physics2D.IgnoreLayerCollision(collisionLayers.PlayerLayer, collisionLayers.EnemyLayer, true);
             StartCoroutine(SetDashTime(dashTime));
+            _audioManager.PlaySFX("dash");
         }
     }
 
@@ -332,5 +361,11 @@ public class PlayerMovement : MonoBehaviour
     {
         if (_dirH == -1f) _spr.flipX = true;
         else if (_dirH == 1f) _spr.flipX = false;
+    }
+
+    private IEnumerator PlayStepsInterval(float t)
+    {
+        yield return new WaitForSeconds(t);
+        _canPlaySteps = true;
     }
 }

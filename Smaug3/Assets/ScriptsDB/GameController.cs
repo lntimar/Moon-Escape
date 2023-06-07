@@ -10,17 +10,19 @@ public class GameController : MonoBehaviour
 {
     void Start()
     {
-        print("Armas Cadastradas");
-        var w = GamesCodeDataSource.Instance.BananaDAO.GetBanana(3);
-        print("Personagemes Cadastrados");
-        var x = GamesCodeDataSource.Instance.BossDAO.GetBoss(1);
-        //print("Armas e respectivos Personagemes que as usam");
-        GamesCodeDataSource.Instance.QueryDAO.BananaINNERBoss();
-        // print("Todas Armas Cadastradas e Personagemes que as usam");
-        GamesCodeDataSource.Instance.QueryDAO.BananaLEFTBoss();
-    }
-    // Update is called once per frame
-    void Update()
-    {
+        Debug.LogWarning("Bananas Cadastradas");
+        // Mostrando todas as bananas cadastradas
+        for (int i = 1; i < 5; i++)
+        {
+            var w = GamesCodeDataSource.Instance.BananaDAO.GetBanana(i);
+        }
+
+
+        Debug.LogWarning("Bosses Cadastrados");
+        // Mostrando todos os bosses cadastrados
+        for (int i = 1; i < 6; i++)
+        {
+            var x = GamesCodeDataSource.Instance.BossDAO.GetBoss(i);
+        }
     }
 }

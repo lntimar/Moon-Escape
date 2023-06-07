@@ -17,6 +17,8 @@ GameObject:
   - component: {fileID: 4787166725898891396}
   - component: {fileID: 4787166725898891392}
   - component: {fileID: 4787166725898891398}
+  - component: {fileID: 5464579545945201487}
+  - component: {fileID: 2939574990226068690}
   m_Layer: 15
   m_Name: Gorila Ice
   m_TagString: Untagged
@@ -182,6 +184,8 @@ MonoBehaviour:
   effects: []
   endBossFightTime: 3
   collisionLayers: {fileID: 11400000, guid: 68fa50b41700bab4686a532e8f67a498, type: 2}
+  nextBanana: {fileID: 0}
+  curBanana: {fileID: 0}
   BehaviourScript: {fileID: 0}
 --- !u!114 &4787166725898891392
 MonoBehaviour:
@@ -236,6 +240,32 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   time: 0.5
   interval: 0.15
+--- !u!114 &5464579545945201487
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4787166725898891417}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf0656c468a9ac1409fb46b7084256c1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &2939574990226068690
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4787166725898891417}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ea5ae95e03c41641bc37b24e05119c4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  effectColor: {r: 0.6886792, g: 0.6886792, b: 0.6886792, a: 1}
+  bossEffectPrefab: {fileID: 6576983330063520908, guid: 5aef299cec0b2514eb37bbea4b99f679, type: 3}
 --- !u!1 &4787166727509241159
 GameObject:
   m_ObjectHideFlags: 0

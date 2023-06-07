@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class InitialPlayerMovement : MonoBehaviour
 {
@@ -22,6 +23,9 @@ public class InitialPlayerMovement : MonoBehaviour
     [SerializeField, Range(0f, 6f)] private float coyoteTime;
     [SerializeField] private float coyoteTimeCounter = 0;
 
+    // References
+    private AudioManager _audioManager;
+
     // Components
     private Rigidbody2D _rb;
     private SpriteRenderer _spr;
@@ -31,12 +35,18 @@ public class InitialPlayerMovement : MonoBehaviour
     // Input
     private float _dirH;
 
+    private bool _canPlaySteps = true;
+
     private void Start()
     {
         _rb = GetComponent<Rigidbody2D>();
         _spr = GetComponent<SpriteRenderer>();
         _anim = GetComponent<Animator>();
         _playerAttack = GetComponent<InitialPlayerAttack>();
+
+        _audioManager = GameObject.FindGameObjectWithTag("AudioManager").GetComponent<AudioManager>();
+
+        _audioManager.PlaySFX("macaquinho barulho");
     }
 
     private void Update()
@@ -103,7 +113,20 @@ public class InitialPlayerMovement : MonoBehaviour
     {
         _rb.velocity = new Vector2(SetVelocity(MoveSpeed * _dirH, _rb.velocity.x, acceleration), _rb.velocity.y);
 
-        if (_rb.velocity.x != 0) InitialPlayerStateMachine.StateManager.SetState(InitialPlayerStateMachine.InitialPlayerStates.Moving);
+        if (_rb.velocity.x != 0)
+        {
+            InitialPlayerStateMachine.StateManager.SetState(InitialPlayerStateMachine.InitialPlayerStates.Moving);
+            if (_canPlaySteps)
+            {
+                if (SceneManager.GetActiveScene().name == "Setor Florestal")
+                    _audioManager.PlaySFX("passos floresta");
+                else
+                    _audioManager.PlaySFX("passos metal");
+
+                _canPlaySteps = false;
+                StartCoroutine(PlayStepsInterval(0.5f));
+            }
+        }
         else InitialPlayerStateMachine.StateManager.SetState(InitialPlayerStateMachine.InitialPlayerStates.Idle);
     }
 
@@ -132,6 +155,7 @@ public class InitialPlayerMovement : MonoBehaviour
             _rb.velocity = new Vector2(_rb.velocity.x, 0f);
             _rb.AddForce(new Vector2(0f, jumpForce), ForceMode2D.Impulse);
             _anim.SetTrigger("jump");
+            _audioManager.PlaySFX("pulo");
         }
     }
 
@@ -156,5 +180,11 @@ public class InitialPlayerMovement : MonoBehaviour
     {
         if (_dirH == -1f) _spr.flipX = true;
         else if (_dirH == 1f) _spr.flipX = false;
+    }
+
+    private IEnumerator PlayStepsInterval(float t)
+    {
+        yield return new WaitForSeconds(t);
+        _canPlaySteps = true;
     }
 }

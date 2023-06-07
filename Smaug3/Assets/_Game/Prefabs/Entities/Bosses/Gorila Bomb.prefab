@@ -122,6 +122,8 @@ GameObject:
   - component: {fileID: 3991598674300726325}
   - component: {fileID: 3991598674300726327}
   - component: {fileID: 3991598674300726321}
+  - component: {fileID: -6296707221924374922}
+  - component: {fileID: 7569583196432213816}
   m_Layer: 15
   m_Name: Gorila Bomb
   m_TagString: Untagged
@@ -290,6 +292,8 @@ MonoBehaviour:
   - {fileID: 2413207788672762813}
   endBossFightTime: 3
   collisionLayers: {fileID: 11400000, guid: 68fa50b41700bab4686a532e8f67a498, type: 2}
+  nextBanana: {fileID: 0}
+  curBanana: {fileID: 0}
   BehaviourScript: {fileID: 0}
 --- !u!114 &3991598674300726327
 MonoBehaviour:
@@ -334,6 +338,32 @@ MonoBehaviour:
   bombMaxCount: 2
   bombInterval: 2
   collisionLayers: {fileID: 11400000, guid: 68fa50b41700bab4686a532e8f67a498, type: 2}
+--- !u!114 &-6296707221924374922
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3991598674300726312}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf0656c468a9ac1409fb46b7084256c1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &7569583196432213816
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3991598674300726312}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ea5ae95e03c41641bc37b24e05119c4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  effectColor: {r: 0.6886792, g: 0.6886792, b: 0.6886792, a: 1}
+  bossEffectPrefab: {fileID: 6576983330063520908, guid: 5aef299cec0b2514eb37bbea4b99f679, type: 3}
 --- !u!1 &3991598674454519886
 GameObject:
   m_ObjectHideFlags: 0

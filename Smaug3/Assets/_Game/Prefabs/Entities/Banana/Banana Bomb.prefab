@@ -161,7 +161,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Name: Bomb
-  Damage: 0
+  Damage: 5
   Speed: 18
   EnergyCost: 4
   LifeTime: 5

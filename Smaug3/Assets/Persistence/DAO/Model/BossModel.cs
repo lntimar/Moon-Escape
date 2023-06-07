@@ -13,7 +13,7 @@ public class BossModel : MonoBehaviour
 
     public BossModel() { }
 
-    public BossModel(int id, int maxHealth, int damage, string name, float moveSpeed, int bananaId) 
+    public BossModel(int id, int maxHealth, int damage, string name, float moveSpeed, int bananaId)
     {
         Id = id;
         MaxHealth = maxHealth;

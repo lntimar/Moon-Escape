@@ -12,12 +12,18 @@ public class BossCompanionOrb : MonoBehaviour
     // Movement
     private Vector2 moveDir;
 
+    // Efeito
+    [SerializeField] private Color effectColor;
+    [SerializeField] private GameObject orbEffectPrefab;
+
     private void Start()
     {
         _rb = GetComponent<Rigidbody2D>();
         _enemy = GetComponent<Enemy>();
 
         SetMoveDirection();
+
+        StartCoroutine(ApplyEffect(0.02f));
     }
 
     private void FixedUpdate()
@@ -40,5 +46,15 @@ public class BossCompanionOrb : MonoBehaviour
     private void ApplyMove()
     {
         _rb.velocity = moveDir * _enemy.Speed;
+    }
+
+    private IEnumerator ApplyEffect(float t)
+    {
+        yield return new WaitForSeconds(t);
+        var effect = Instantiate(orbEffectPrefab, transform.position, Quaternion.identity);
+        var effectSpr = effect.GetComponent<SpriteRenderer>();
+        effectSpr.sprite = GetComponent<SpriteRenderer>().sprite;
+        effectSpr.color = effectColor;
+        StartCoroutine(ApplyEffect(0.02f));
     }
 }

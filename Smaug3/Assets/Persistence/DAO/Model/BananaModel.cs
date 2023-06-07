@@ -12,7 +12,7 @@ public class BananaModel : MonoBehaviour
 
     public BananaModel() { }
 
-    public BananaModel(int id, int damage, string name, int energyCost, float moveSpeed) 
+    public BananaModel(int id, int damage, string name, int energyCost, float moveSpeed)
     {
         Id = id;
         Damage = damage;

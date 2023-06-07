@@ -5,19 +5,67 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
+  - enabled: 1
+    path: Assets/_Game/Scenes/Levels/SplashScreen 1.unity
+    guid: 54059e00faa5f044cb1f592cebf5cf4e
   - enabled: 0
     path: 
     guid: 00000000000000000000000000000000
+  - enabled: 1
+    path: Assets/_Game/Scenes/Menus/Menu 1.unity
+    guid: 3a0dfb867b5974744b0610ccb0430e44
   - enabled: 1
     path: Assets/_Game/Scenes/Prototype/Test Dash.unity
     guid: 62bc26f2db0e9b44d9ac3d464828f092
   - enabled: 1
     path: Assets/_Game/Scenes/Levels/Armazem.unity
     guid: ea9b23b6cda199b41962df5fcae1e89f
+  - enabled: 1
+    path: Assets/_Game/Scenes/Levels/Sala da Armadura 1.unity
+    guid: 0a5bd999f2450654cb79c5150407405f
+  - enabled: 1
+    path: Assets/_Game/Scenes/Levels/Creditos 1.unity
+    guid: 4e569b0bc6a25b448bb35fc22a67cadc
   - enabled: 0
     path: 
     guid: 00000000000000000000000000000000
   - enabled: 1
-    path: Assets/_Game/Scenes/Levels/Sala da Armadura.unity
-    guid: 0a5bd999f2450654cb79c5150407405f
+    path: Assets/_Game/Scenes/Levels/Creditos 2.unity
+    guid: cd4930019cebad14b9c2de734e839c97
+  - enabled: 1
+    path: Assets/_Game/Scenes/Menus/Menu 2.unity
+    guid: abe5b492060e92848904425c67d781ce
+  - enabled: 1
+    path: Assets/_Game/Scenes/Levels/SplashScreen 2.unity
+    guid: c0572253371d680449186df38837ef23
+  - enabled: 1
+    path: Assets/_Game/Scenes/Levels/Sala da Armadura 2.unity
+    guid: 170904f98885ae241a68c35c3627ea2b
+  - enabled: 1
+    path: Assets/_Game/Scenes/Levels/Central de Controle.unity
+    guid: 688d09b868f6d3d46a72c36d38c35a1d
+  - enabled: 0
+    path: Assets/_Game/Scenes/Levels/Elevador.unity
+    guid: e6fa9cb2da859de4997b541eeb61378f
+  - enabled: 1
+    path: Assets/_Game/Scenes/Levels/Final Boss.unity
+    guid: 875464dbff3fe224b977c86480c03fdd
+  - enabled: 1
+    path: Assets/_Game/Scenes/Levels/Gorila Bomba.unity
+    guid: e75cd7bfbc9a73c45b275eeca404207c
+  - enabled: 1
+    path: Assets/_Game/Scenes/Levels/Gorila Eletrico.unity
+    guid: 0ab7c4afa27ab7c47be6855dacfd7ec4
+  - enabled: 1
+    path: Assets/_Game/Scenes/Levels/Gorila Gelo.unity
+    guid: 624fc2bc110560842bcd0f05bd35cb09
+  - enabled: 1
+    path: Assets/_Game/Scenes/Levels/Mini Boss.unity
+    guid: d04ca4f0776ef4d1ea14f60864ac0d94
+  - enabled: 1
+    path: Assets/_Game/Scenes/Levels/Setor Florestal.unity
+    guid: 78861ac8a0b6cfb408f362463132075c
+  - enabled: 1
+    path: Assets/_Game/Scenes/Levels/Zona Fria.unity
+    guid: e97c2391b626b44989d0d80cf1cee113
   m_configObjects: {}

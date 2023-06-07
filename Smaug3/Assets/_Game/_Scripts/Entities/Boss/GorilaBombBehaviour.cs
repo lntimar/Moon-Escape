@@ -27,6 +27,7 @@ public class GorilaBombBehaviour : MonoBehaviour
 
     // References
     private GameObject _player;
+    private AudioManager _audioManager;
 
     // Components
     private SpriteRenderer _spr;
@@ -68,8 +69,11 @@ public class GorilaBombBehaviour : MonoBehaviour
         _bossScript = GetComponent<Boss>();
 
         _player = GameObject.FindGameObjectWithTag("Player");
+        _audioManager = GameObject.FindGameObjectWithTag("AudioManager").GetComponent<AudioManager>();
 
         StartCoroutine(FlipX(flipXInterval));
+
+        _audioManager.PlayMusic("gorila bomb");
     }
 
     private void Update()
@@ -89,9 +93,12 @@ public class GorilaBombBehaviour : MonoBehaviour
 
         if (!_isShooting && Vector2.Distance(transform.position, _player.transform.position) <= 6f)
         {
-            _anim.Play("Gorila Bomb Attack Animation");
-            _isWaiting = false;
-            _canChange = false;
+            if (Random.Range(0, 100) < 5)
+            {
+                _anim.Play("Gorila Bomb Attack Animation");
+                _isWaiting = false;
+                _canChange = false;
+            }
         }
     }
 
@@ -262,6 +269,7 @@ public class GorilaBombBehaviour : MonoBehaviour
         else
         {
             var bomb = Instantiate(bombPrefab, bombSpawnPoint.position, Quaternion.identity);
+            _audioManager.PlaySFX("bomba");
 
             if (_selectedShootPoint == 0)
                 bomb.DirX = 1f;

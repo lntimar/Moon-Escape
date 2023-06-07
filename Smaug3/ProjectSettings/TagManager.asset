@@ -16,6 +16,8 @@ TagManager:
   - Enemy Attack
   - Enemy Tag
   - BossLifeBar
+  - AudioManager
+  - EndGame
   layers:
   - Default
   - TransparentFX
@@ -40,9 +42,9 @@ TagManager:
   - TriggerMovePoint
   - Bomb
   - Ignore
-  - 
-  - 
-  - 
+  - Door
+  - DoorTrigger
+  - ArmorTrigger
   - 
   - 
   - 

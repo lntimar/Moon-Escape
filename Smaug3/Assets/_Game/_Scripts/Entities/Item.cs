@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -16,11 +17,15 @@ public class Item : MonoBehaviour
     [Header("Collision Layers:")] 
     [SerializeField] private CollisionLayers collisionLayers;
 
+    // References
+    private AudioManager _audioManager;
+
     // Vertical Direction
     private float curVerticalDir = 1f;
 
     private void Start()
     {
+        _audioManager = GameObject.FindGameObjectWithTag("AudioManager").GetComponent<AudioManager>();
         StartCoroutine(ChangeVerticalDirection(changeDirTime));
     }
 
@@ -33,15 +38,42 @@ public class Item : MonoBehaviour
     {
         if (col.gameObject.layer == collisionLayers.PlayerLayer)
         {
-            if (col.gameObject.TryGetComponent<PlayerShoot>(out PlayerShoot playerShoot))
-                playerShoot.ChangeCurrentEnergy(Energy);
-
-            if (col.gameObject.TryGetComponent<PlayerCollision>(out PlayerCollision playerCol))
-                playerCol.ChangeCurrentHealth(Life);
-            else
-                col.gameObject.GetComponent<InitialPlayerCollision>().ChangeCurrentHealth(Life);
-
-            Destroy(gameObject);
+            // Energia
+            if (Life == 0)
+            {
+                if (col.gameObject.TryGetComponent<PlayerShoot>(out PlayerShoot playerShoot))
+                {
+                    if (playerShoot.GetCurrentEnergy() != playerShoot.GetMaxEnergy())
+                    {
+                        playerShoot.ChangeCurrentEnergy(Energy);
+                        _audioManager.PlaySFX("vida energia");
+                        Destroy(gameObject);
+                    }
+                }
+            }
+            else // Vida
+            {
+                // Mecha
+                if (col.gameObject.TryGetComponent<PlayerCollision>(out PlayerCollision playerCol))
+                {
+                    if (playerCol.GetCurrentHealth() != playerCol.GetMaxHealth())
+                    {
+                        playerCol.ChangeCurrentHealth(Life);
+                        _audioManager.PlaySFX("vida energia");
+                        Destroy(gameObject);
+                    }
+                }
+                else // Macaquinho
+                {
+                    var initialPlayerCol = col.gameObject.GetComponent<InitialPlayerCollision>();
+                    if (initialPlayerCol.GetCurrentHealth() != initialPlayerCol.GetMaxHealth())
+                    {
+                        initialPlayerCol.ChangeCurrentHealth(Life);
+                        _audioManager.PlaySFX("vida energia");
+                        Destroy(gameObject);
+                    }
+                }
+            }
         }
 
         if (col.gameObject.layer == collisionLayers.GroundLayer)

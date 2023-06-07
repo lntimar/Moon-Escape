@@ -152,3 +152,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ec2abcda58864f4d91c8c038016ce91, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  effectColor: {r: 0.30588236, g: 0.42352942, b: 0.9372549, a: 1}
+  orbEffectPrefab: {fileID: 6576983330063520908, guid: b5b9f9c359bef9242a15e867bff7bd8f, type: 3}

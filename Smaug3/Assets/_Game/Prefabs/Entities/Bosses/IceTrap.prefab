@@ -185,6 +185,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   collisionLayers: {fileID: 11400000, guid: 68fa50b41700bab4686a532e8f67a498, type: 2}
+  effectColor: {r: 0.17292629, g: 0.42286304, b: 0.5471698, a: 1}
+  iceTrapEffectPrefab: {fileID: 6576983330063520908, guid: d5fe7b237495e354085b87aa3dbf1ce8, type: 3}
 --- !u!114 &-3406223184027453385
 MonoBehaviour:
   m_ObjectHideFlags: 0

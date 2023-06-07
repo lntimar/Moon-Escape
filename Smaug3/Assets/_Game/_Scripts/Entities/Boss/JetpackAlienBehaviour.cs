@@ -21,16 +21,22 @@ public class JetpackAlienBehaviour : MonoBehaviour
     [Header("Collision Layers:")] 
     [SerializeField] private CollisionLayers collisionLayers;
 
+    // References
+    private AudioManager _audioManager;
+
     // Components
     private Boss _bossScript;
     private BossCollision _bossCollisionScript;
     private SpriteRenderer _spr;
     private Rigidbody2D _rb;
+    private DropItem _dropItem;
 
     // Movement
     private float _horizontalDirection = 1f;
     private int _currentHeightPoint = 0;
     private bool _canFlip = true;
+
+    private bool _canPlayJetpackSFX = true;
 
     private void Start()
     {
@@ -38,6 +44,9 @@ public class JetpackAlienBehaviour : MonoBehaviour
         _bossCollisionScript = GetComponent<BossCollision>();
         _spr = GetComponent<SpriteRenderer>();
         _rb = GetComponent<Rigidbody2D>();
+        _dropItem = GetComponent<DropItem>();
+
+        _audioManager = GameObject.FindGameObjectWithTag("AudioManager").GetComponent<AudioManager>();
 
         StartCoroutine(VerifyHeightPoint(verifyHeightPointTime));
     }
@@ -73,6 +82,8 @@ public class JetpackAlienBehaviour : MonoBehaviour
                 laserPoint.transform.localPosition = new Vector3(-0.887f,
                     laserPoint.transform.localPosition.y, laserPoint.transform.localPosition.z);
             }
+
+            _dropItem.SpawnBonus(false);
         }
     }
 
@@ -88,6 +99,13 @@ public class JetpackAlienBehaviour : MonoBehaviour
         {
             var y = Mathf.Lerp(transform.position.y, heightPoints[_currentHeightPoint].position.y, _bossScript.Speed * Time.deltaTime);
             transform.position = new Vector3(transform.position.x, y, transform.position.z);
+
+            if (_canPlayJetpackSFX)
+            {
+                _canPlayJetpackSFX = false;
+                _audioManager.PlaySFX("jetpack");
+                StartCoroutine(JetpackSFXInterval(0.75f));
+            }
         }
     }
 
@@ -132,5 +150,16 @@ public class JetpackAlienBehaviour : MonoBehaviour
     {
         StopAllCoroutines();
         laserPoint.gameObject.SetActive(false);
+    }
+
+    private IEnumerator JetpackSFXInterval(float t)
+    {
+        yield return new WaitForSeconds(t);
+        _canPlayJetpackSFX = true;
+    }
+
+    private void OnDestroy()
+    {
+        _audioManager.PlaySFX("colecionaveis");
     }
 }

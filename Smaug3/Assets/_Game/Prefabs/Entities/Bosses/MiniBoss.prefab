@@ -74,7 +74,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1701221225
   m_SortingLayer: 1
-  m_SortingOrder: -2
+  m_SortingOrder: -1
   m_Sprite: {fileID: 21300000, guid: 8e504fdfe6b6c2745b33f0a64bf4c561, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -144,6 +144,7 @@ GameObject:
   - component: {fileID: 4960041048011483501}
   - component: {fileID: 4960041048011483499}
   - component: {fileID: 4960041048011483498}
+  - component: {fileID: 6903966534033563517}
   m_Layer: 15
   m_Name: MiniBoss
   m_TagString: Untagged
@@ -291,8 +292,8 @@ MonoBehaviour:
   MaxHealth: 12
   Damage: 2
   Speed: 2
-  Banana: 
   Name: MiniBoss
+  BananaType: {fileID: 0}
 --- !u!114 &4960041048011483501
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -309,6 +310,8 @@ MonoBehaviour:
   effects: []
   endBossFightTime: 3
   collisionLayers: {fileID: 11400000, guid: 68fa50b41700bab4686a532e8f67a498, type: 2}
+  nextBanana: {fileID: 0}
+  curBanana: {fileID: 0}
   BehaviourScript: {fileID: 0}
 --- !u!114 &4960041048011483499
 MonoBehaviour:
@@ -348,3 +351,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   time: 0.5
   interval: 0.15
+--- !u!114 &6903966534033563517
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4960041048011483507}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d25a3e09c38bef54093520c3f75d228f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  minBonusHealth: 4
+  minBonusEnergy: 4
+  itemLifePrefab: {fileID: 7324032329419909800, guid: 7110bc829f227f14188c2fd37ee8bf45, type: 3}
+  itemEnergyPrefab: {fileID: 7324032329419909800, guid: eb86b6ee97bd4e949bb66982cf70d9d3, type: 3}

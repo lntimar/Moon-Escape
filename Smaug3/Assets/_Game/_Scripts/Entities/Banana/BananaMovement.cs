@@ -23,7 +23,7 @@ public class BananaMovement : MonoBehaviour
         _rb = GetComponent<Rigidbody2D>();
         _spr = GetComponent<SpriteRenderer>();
 
-        StartCoroutine(ApplyEffect(0.02f));
+        StartCoroutine(ApplyEffect(0.01f));
 
         if (_direction.x < 0f) _spr.flipX = true;
     }
@@ -55,6 +55,6 @@ public class BananaMovement : MonoBehaviour
         var effectSpr = effect.GetComponent<SpriteRenderer>();
         effectSpr.sprite = GetComponent<SpriteRenderer>().sprite;
         effectSpr.color = effectColor;
-        StartCoroutine(ApplyEffect(0.02f));
+        StartCoroutine(ApplyEffect(0.01f));
     }
 }

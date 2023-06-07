@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class BananaCollision : MonoBehaviour
 {
+    // References
+    private AudioManager _audioManager;
+
     // Components
     private Banana _banana;
     private BananaType _bananaType;
@@ -20,6 +23,8 @@ public class BananaCollision : MonoBehaviour
         _banana = GetComponent<Banana>();
         _bananaType = GetComponent<BananaType>();
         _bananaMovement = GetComponent<BananaMovement>();
+
+        _audioManager = GameObject.FindGameObjectWithTag("AudioManager").GetComponent<AudioManager>();
 
         Destroy(gameObject, _banana.LifeTime);
     }
@@ -58,6 +63,29 @@ public class BananaCollision : MonoBehaviour
 
     private void OnDestroy()
     {
+        switch (_bananaType.GetBananaType())
+        {
+            // Normal
+            case BananaType.Types.Default:
+                _audioManager.PlaySFX("barulho banana neutra");
+                break;
+
+            // Gelo
+            case BananaType.Types.Ice:
+                _audioManager.PlaySFX("barulho banana neutra");
+                break;
+
+            // Bomba
+            case BananaType.Types.Bomb:
+                _audioManager.PlaySFX("barulho banana bomba");
+                break;
+
+            // Elétrica
+            case BananaType.Types.Eletric:
+                _audioManager.PlaySFX("barulho banana eletrica");
+                break;
+        }
+
         var destroyedBanana = Instantiate(destroyedBananaPrefab, transform.position, Quaternion.identity);
         destroyedBanana.SwitchAnimation(_bananaType.GetBananaType());
 

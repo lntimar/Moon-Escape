@@ -12,8 +12,12 @@ public class BossCompanionShoot : MonoBehaviour
     [Header("Prefab:")]
     [SerializeField] private BossCompanionOrb orbPrefab; 
 
+    // References
+    private AudioManager _audioManager;
+
     private void Start()
     {
+        _audioManager = GameObject.FindGameObjectWithTag("AudioManager").GetComponent<AudioManager>();
         StartCoroutine(StartSpawnOrbInterval());
     }
 
@@ -26,6 +30,10 @@ public class BossCompanionShoot : MonoBehaviour
     {
         yield return new WaitForSeconds(Random.Range(minSpawnTime, maxSpawnTime));
         Instantiate(orbPrefab, spawnPoint.position, Quaternion.identity);
+
+        var index = Random.Range(1, 3);
+
+        _audioManager.PlaySFX("orbe " + index);
 
         StartCoroutine(StartSpawnOrbInterval());
     }

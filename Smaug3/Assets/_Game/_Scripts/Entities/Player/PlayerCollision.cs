@@ -30,9 +30,13 @@ public class PlayerCollision : MonoBehaviour
     [Header("Restart Scene:")] [SerializeField]
     private float restartSceneTime;
 
+    //Game over canva
+    //[SerializeField] private GameObject gameOverCanva; 
+
     // References
     private FadeVFX _fadeIn;
     private PlayerHealthBar _playerHealthBar;
+    private AudioManager _audioManager;
 
     // Components
     private BlinkSpriteVFX _blinkVFX;
@@ -58,7 +62,9 @@ public class PlayerCollision : MonoBehaviour
         _fadeIn = GameObject.FindGameObjectWithTag("Fade In").GetComponent<FadeVFX>();
 
         _playerHealthBar = GameObject.FindGameObjectWithTag("Health Bar").GetComponent<PlayerHealthBar>();
-        
+
+        _audioManager = GameObject.FindGameObjectWithTag("AudioManager").GetComponent<AudioManager>();
+
         if (currentHealth == 0)
         {
             ChangeCurrentHealth(maxHealth);
@@ -188,6 +194,9 @@ public class PlayerCollision : MonoBehaviour
                 }
             }
         }
+
+        if (col.gameObject.layer == collisionLayers.SpikeLayer && !PlayerStateMachine.StateManager.CompareState(PlayerStateMachine.PlayerStates.Dashing))
+            ChangeCurrentHealth(-maxHealth);
     }
 
     private void OnTriggerStay2D(Collider2D col)
@@ -232,16 +241,24 @@ public class PlayerCollision : MonoBehaviour
             alpha.a *= 0.75f;
             _spr.color = alpha;
 
-            _fadeIn.enabled = true;
+            //_fadeIn.enabled = true;
 
-            StartCoroutine(RestartScene(restartSceneTime));
+            
+            _audioManager.PlayMusic("game over");
+
+            //StartCoroutine(RestartScene(restartSceneTime));
         }
     }
 
     public int GetCurrentHealth()
     {
         return currentHealth;
-    } 
+    }
+
+    public int GetMaxHealth()
+    {
+        return maxHealth;
+    }
 
     private IEnumerator SetInvencibilityInterval(float t)
     {

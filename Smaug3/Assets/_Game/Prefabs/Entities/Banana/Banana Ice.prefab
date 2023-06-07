@@ -161,7 +161,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Name: Ice
-  Damage: 0
+  Damage: 4
   Speed: 18
   EnergyCost: 2
   LifeTime: 5

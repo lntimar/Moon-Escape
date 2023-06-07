@@ -10,6 +10,13 @@ public class Bomb : MonoBehaviour
     [SerializeField] private float maxHorizontalSpeed;
     [SerializeField] private CollisionLayers collisionLayers;
     [SerializeField] private float spawnExplosionTime;
+    
+    [Header("Move Effect")]
+    [SerializeField] private Color effectColor;
+    [SerializeField] private GameObject bombEffectPrefab;
+
+    // References
+    private AudioManager _audioManager;
 
     // Components
     private Rigidbody2D _rb;
@@ -19,12 +26,24 @@ public class Bomb : MonoBehaviour
     [HideInInspector] public float DirX;
     private float _curHorizontalSpeed;
 
+    // Bomb
+    private bool _canPlayBombaTimer = true;
+
     private void Start()
     {
         _rb = GetComponent<Rigidbody2D>();
         _hitbox = GetComponent<CircleCollider2D>();
+        _audioManager = GameObject.FindGameObjectWithTag("AudioManager").GetComponent<AudioManager>();
 
         _curHorizontalSpeed = Random.Range(minHorizontalSpeed, maxHorizontalSpeed);
+
+        if (_canPlayBombaTimer)
+        {
+            _audioManager.PlaySFX("bomba timer");
+            _canPlayBombaTimer = false;
+        }
+
+        StartCoroutine(ApplyEffect(0.02f));
     }
 
     private void FixedUpdate()
@@ -41,10 +60,10 @@ public class Bomb : MonoBehaviour
         else if (col.gameObject.layer == collisionLayers.GroundLayer)
         {
             DirX = 0f;
-            _rb.gravityScale = 0f;
-            _rb.velocity = Vector2.zero;
+            //_rb.gravityScale = 0f;
+            //_rb.velocity = Vector2.zero;
             StartCoroutine(SpawnExplosionInterval(spawnExplosionTime));
-            _hitbox.isTrigger = true;
+            _hitbox.isTrigger = false;
         }
         else if (col.gameObject.layer == collisionLayers.BananaLayer)
         {
@@ -70,5 +89,15 @@ public class Bomb : MonoBehaviour
     {
         yield return new WaitForSeconds(t);
         SpawnExplosion();
+    }
+
+    private IEnumerator ApplyEffect(float t)
+    {
+        yield return new WaitForSeconds(t);
+        var effect = Instantiate(bombEffectPrefab, transform.position, Quaternion.identity);
+        var effectSpr = effect.GetComponent<SpriteRenderer>();
+        effectSpr.sprite = GetComponent<SpriteRenderer>().sprite;
+        effectSpr.color = effectColor;
+        StartCoroutine(ApplyEffect(0.02f));
     }
 }

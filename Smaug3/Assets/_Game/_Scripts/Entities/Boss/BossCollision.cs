@@ -22,9 +22,13 @@ public class BossCollision : MonoBehaviour
     [SerializeField] private GameObject nextBanana;
     [SerializeField] private GameObject curBanana;
 
+    [Header("Boss Door:")] 
+    [SerializeField] private Door[] doors;
+
     // References
     private RectTransform _lifebarTransform;
     private GameObject _player;
+    private AudioManager _audioManager;
 
     // Components
     private Boss _boss;
@@ -33,6 +37,7 @@ public class BossCollision : MonoBehaviour
     private Rigidbody2D _rb;
     private CapsuleCollider2D _hitbox;
     
+    [Header("Behaviour:")]
     public MonoBehaviour BehaviourScript;
 
     private void Start()
@@ -44,6 +49,8 @@ public class BossCollision : MonoBehaviour
         _hitbox = GetComponent<CapsuleCollider2D>();
         _lifebarTransform = GameObject.FindGameObjectWithTag("BossLifeBar").GetComponent<RectTransform>();
         _player = GameObject.FindGameObjectWithTag("Player");
+
+        _audioManager = GameObject.FindGameObjectWithTag("AudioManager").GetComponent<AudioManager>();
 
         GetBehaviour();
 
@@ -60,6 +67,11 @@ public class BossCollision : MonoBehaviour
             // Boss Morre
             _anim.Play("Death Animation");
 
+            if (_boss.Name.Contains("Gorila"))
+                _audioManager.PlaySFX("gorila grito");
+            else if (_boss.Name.Contains("Final"))
+                _audioManager.PlaySFX("final boss morrendo");
+
             if (curBanana != null)
             {
                 curBanana.SetActive(false);
@@ -72,8 +84,24 @@ public class BossCollision : MonoBehaviour
             {
                 GetComponent<GorilaEletricBehaviour>().DisableEletricTraps();
             }
+            else if (_boss.Name == "MiniBoss")
+            {
+                _rb.velocity = Vector2.zero;
+            }
+            else if (_boss.Name == "Gorila Ice" || _boss.Name == "FinalBoss")
+            {
+                GameObject.FindGameObjectWithTag("EndGame").GetComponent<EndGame>().Activate();
+            }
 
-            BehaviourScript.enabled = false;
+            if (doors.Length != 0)
+            {
+                foreach (var door in doors)
+                {
+                    door.Open();
+                }
+            }
+
+                BehaviourScript.enabled = false;
             _rb.isKinematic = true;
             Destroy(_hitbox);
 
@@ -119,7 +147,8 @@ public class BossCollision : MonoBehaviour
     private void OnDestroy()
     {
         // Drop o Item da BossFight
-        DropItem();
+        if (currentHealth == 0)
+            DropItem();
     }
 
     private void DropItem()

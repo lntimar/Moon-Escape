@@ -76,7 +76,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1701221225
   m_SortingLayer: 1
-  m_SortingOrder: 0
+  m_SortingOrder: 2
   m_Sprite: {fileID: 2089405017, guid: 1f53b9e2fac987f4d83105605795f1c5, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -162,4 +162,6 @@ MonoBehaviour:
   maxHorizontalSpeed: 40
   collisionLayers: {fileID: 11400000, guid: 68fa50b41700bab4686a532e8f67a498, type: 2}
   spawnExplosionTime: 1
+  effectColor: {r: 0.69803923, g: 0.4117647, b: 0.31764707, a: 1}
+  bombEffectPrefab: {fileID: 6576983330063520908, guid: a7779bc513b72524d9e64526abb41f18, type: 3}
   DirX: 0

@@ -45,8 +45,8 @@ public class EnemyBombEffect : MonoBehaviour
     {
         enemyColScript.gameObject.layer = collisionLayers.IgnoreExplosionLayer;
         _anim.SetTrigger("explode");
-        if (Random.Range(0, 100) <= 50) _anim.SetInteger("rand", 1);
-        else _anim.SetInteger("rand", -1);
+        //if (Random.Range(0, 100) <= 50) _anim.SetInteger("rand", 1);
+        //else _anim.SetInteger("rand", -1);
         _hitbox.enabled = true;
 
         StartCoroutine(StopExplosion(explosionTime));
@@ -57,7 +57,7 @@ public class EnemyBombEffect : MonoBehaviour
     {
         yield return new WaitForSeconds(t);
         _hitbox.enabled = false;
-        _anim.SetInteger("rand", 0);
+        //_anim.SetInteger("rand", 0);
     }
 
     private IEnumerator SetCooldown(float t)

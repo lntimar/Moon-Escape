@@ -64,7 +64,6 @@ namespace Assets.Scripts.Persistence.DAO.Implementation
                         banana.EnergyCost = reader.GetInt32(3);
                         banana.MoveSpeed = reader.GetFloat(4);
                         Debug.Log("\tid:" + reader["Id"] + "dano:" + reader["Damage"] + "\tnome:" + reader["Name"] + "\tenergia:" + reader["EnergyCost"] + "\tvelocidade:" + reader["MoveSpeed"]);
-                        
                     }
                 }
                 return banana;
@@ -110,8 +109,6 @@ namespace Assets.Scripts.Persistence.DAO.Implementation
                 connection.Open();
                 using (var command = connection.CreateCommand())
                 {
-
-
                     command.CommandText = commandText;
                     command.Parameters.AddWithValue("@id", banana.Id);
                     command.Parameters.AddWithValue("@damage", banana.Damage);

@@ -1,7 +1,5 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -37,6 +35,7 @@ public class EnemyBehaviour : MonoBehaviour
 
     // References
     private GameObject _player;
+    private AudioManager _audioManager;
 
     // Components
     private Rigidbody2D _rb;
@@ -69,6 +68,8 @@ public class EnemyBehaviour : MonoBehaviour
         _curRayDistance = rayDistance;
 
         _shootInterval = initialShootInterval;
+
+        _audioManager = GameObject.FindGameObjectWithTag("AudioManager").GetComponent<AudioManager>();
     }
 
     private void Update()
@@ -107,6 +108,7 @@ public class EnemyBehaviour : MonoBehaviour
                             GameObject bulletObj = Instantiate(bullet, spawnPoint, Quaternion.identity);
                             var bulletScript = bulletObj.GetComponent<EnemyBulletMovement>();
                             Anim.SetTrigger("Shoot");
+                            //_audioManager.PlaySFX("laser 1");
                             _shootInterval = initialShootInterval;
 
                             if (_spr.flipX)

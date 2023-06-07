@@ -27,3 +27,5 @@ MonoBehaviour:
   TriggerLevelLayer: 17
   SpikeLayer: 19
   TriggerMovePointLayer: 20
+  DoorTriggerLayer: 24
+  ArmorTriggerLayer: 25
